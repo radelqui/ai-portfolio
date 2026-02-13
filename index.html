@@ -1,979 +1,1099 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlos De La Torre — IA Orquestador</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg-deep: #0a0a0f;
-  --bg-panel: #0d0d14;
-  --bg-card: #12121c;
-  --border: #1a1a2e;
-  --border-glow: #00ff8820;
-  --green: #00ff88;
-  --green-dim: #00ff8840;
-  --green-dark: #00ff8815;
-  --blue: #00b4ff;
-  --blue-dim: #00b4ff40;
-  --purple: #a855f7;
-  --amber: #ffb800;
-  --red: #ff4444;
-  --text: #e0e0e8;
-  --text-dim: #6a6a80;
-  --text-mid: #9090a8;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg-deep);
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  overflow-x: hidden;
-  cursor: default;
-}
-
-/* ═══ SCANLINES + NOISE ═══ */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,255,136,0.015) 2px,
-    rgba(0,255,136,0.015) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.03) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ═══ HERO ═══ */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-  position: relative;
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-}
-
-.status-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 12px var(--green);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--green); }
-  50% { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
-}
-
-.hero-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
-}
-
-.hero-title .line1 { color: var(--text); }
-.hero-title .line2 { 
-  color: var(--green);
-  text-shadow: 0 0 40px rgba(0,255,136,0.3);
-}
-.hero-title .line3 { 
-  color: var(--text-dim);
-  font-weight: 300;
-  font-size: 0.5em;
-}
-
-.hero-sub {
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: var(--text-mid);
-  max-width: 700px;
-  line-height: 1.7;
-  margin-top: 1.5rem;
-  font-weight: 300;
-}
-
-.hero-sub strong {
-  color: var(--green);
-  font-weight: 500;
-}
-
-.hero-stats {
-  display: flex;
-  gap: 3rem;
-  margin-top: 3rem;
-  flex-wrap: wrap;
-}
-
-.stat {
-  text-align: left;
-}
-
-.stat-value {
-  font-family: 'Syne', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--green);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: 0.25rem;
-}
-
-/* ═══ LIVE TERMINAL ═══ */
-.terminal-section {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-label {
-  font-size: 0.65rem;
-  color: var(--green);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.section-label::before {
-  content: '▸';
-}
-
-.terminal-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1rem;
-}
-
-.terminal {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: border-color 0.3s;
-}
-
-.terminal:hover {
-  border-color: var(--green-dim);
-}
-
-.terminal-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-  font-size: 0.7rem;
-}
-
-.terminal-dots {
-  display: flex;
-  gap: 4px;
-}
-
-.terminal-dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.terminal-dots span:nth-child(1) { background: #ff5f57; }
-.terminal-dots span:nth-child(2) { background: #febc2e; }
-.terminal-dots span:nth-child(3) { background: #28c840; }
-
-.terminal-title {
-  color: var(--text-dim);
-  flex: 1;
-  text-align: center;
-}
-
-.terminal-status {
-  font-size: 0.6rem;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: 500;
-}
-
-.status-live {
-  background: rgba(0,255,136,0.15);
-  color: var(--green);
-  animation: pulse-status 3s ease-in-out infinite;
-}
-
-.status-ready {
-  background: rgba(0,180,255,0.15);
-  color: var(--blue);
-}
-
-.status-processing {
-  background: rgba(255,184,0,0.15);
-  color: var(--amber);
-}
-
-@keyframes pulse-status {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.terminal-body {
-  padding: 1rem;
-  font-size: 0.75rem;
-  line-height: 1.8;
-  min-height: 200px;
-  position: relative;
-}
-
-.terminal-body .line {
-  opacity: 0;
-  animation: type-in 0.3s forwards;
-}
-
-@keyframes type-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.prompt { color: var(--green); }
-.cmd { color: var(--text); }
-.output { color: var(--text-dim); }
-.success { color: var(--green); }
-.info { color: var(--blue); }
-.warn { color: var(--amber); }
-.agent-name { color: var(--purple); }
-
-.cursor-blink {
-  display: inline-block;
-  width: 8px;
-  height: 14px;
-  background: var(--green);
-  animation: blink 1s step-end infinite;
-  vertical-align: middle;
-  margin-left: 2px;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* ═══ PROJECTS ═══ */
-.projects-section {
-  padding: 6rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.project-card {
-  background: var(--bg-panel);
-  padding: 2rem;
-  position: relative;
-  transition: all 0.4s;
-}
-
-.project-card:hover {
-  background: var(--bg-card);
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 0;
-  transition: height 0.4s;
-}
-
-.project-card:hover::before {
-  height: 100%;
-}
-
-.project-card:nth-child(1)::before { background: var(--green); }
-.project-card:nth-child(2)::before { background: var(--blue); }
-.project-card:nth-child(3)::before { background: var(--purple); }
-.project-card:nth-child(4)::before { background: var(--amber); }
-
-.project-icon {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.project-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.project-desc {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-.tag {
-  font-size: 0.6rem;
-  padding: 2px 8px;
-  border-radius: 3px;
-  background: var(--green-dark);
-  color: var(--green);
-  border: 1px solid var(--green-dim);
-}
-
-.tag.blue { background: rgba(0,180,255,0.08); color: var(--blue); border-color: var(--blue-dim); }
-.tag.purple { background: rgba(168,85,247,0.08); color: var(--purple); border-color: rgba(168,85,247,0.3); }
-.tag.amber { background: rgba(255,184,0,0.08); color: var(--amber); border-color: rgba(255,184,0,0.3); }
-
-/* ═══ INFRA ═══ */
-.infra-section {
-  padding: 4rem 2rem 6rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.infra-visual {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.infra-block {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.infra-block:hover {
-  border-color: var(--green-dim);
-  transform: translateY(-2px);
-}
-
-.infra-block::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.infra-block:hover::after { opacity: 1; }
-
-.infra-number {
-  font-family: 'Syne', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: var(--green);
-}
-
-.infra-label {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  margin-top: 0.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* ═══ METHODOLOGY ═══ */
-.method-section {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.method-flow {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-top: 2rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-
-.method-step {
-  flex-shrink: 0;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  padding: 1.5rem;
-  border-radius: 8px;
-  min-width: 200px;
-  text-align: center;
-  transition: all 0.3s;
-}
-
-.method-step:hover {
-  border-color: var(--green-dim);
-  background: var(--bg-card);
-}
-
-.method-arrow {
-  flex-shrink: 0;
-  color: var(--green-dim);
-  font-size: 1.5rem;
-  padding: 0 0.5rem;
-}
-
-.method-step-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--green);
-  margin-bottom: 0.3rem;
-}
-
-.method-step-desc {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
-
-/* ═══ CONTACT ═══ */
-.contact-section {
-  padding: 6rem 2rem;
-  text-align: center;
-  position: relative;
-}
-
-.contact-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.contact-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.contact-text {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  max-width: 500px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-}
-
-.contact-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.contact-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.8rem;
-  transition: all 0.3s;
-}
-
-.contact-link:hover {
-  border-color: var(--green);
-  background: var(--green-dark);
-  color: var(--green);
-}
-
-.contact-link.primary {
-  background: var(--green);
-  color: var(--bg-deep);
-  border-color: var(--green);
-  font-weight: 500;
-}
-
-.contact-link.primary:hover {
-  background: #00cc6e;
-  box-shadow: 0 0 30px rgba(0,255,136,0.3);
-}
-
-/* ═══ FOOTER ═══ */
-.footer {
-  padding: 2rem;
-  text-align: center;
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  border-top: 1px solid var(--border);
-}
-
-/* ═══ SCROLL ANIMATIONS ═══ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ═══ RESPONSIVE ═══ */
-@media (max-width: 768px) {
-  .hero-stats { gap: 1.5rem; }
-  .terminal-grid { grid-template-columns: 1fr; }
-  .method-flow { flex-direction: column; }
-  .method-arrow { transform: rotate(90deg); }
-  .infra-visual { grid-template-columns: repeat(2, 1fr); }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos De La Torre — IA Orquestador</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0a0f;
+      --bg-panel: #0d0d14;
+      --bg-card: #12121c;
+      --border: #1a1a2e;
+      --border-glow: #00ff8820;
+      --green: #00ff88;
+      --green-dim: #00ff8840;
+      --green-dark: #00ff8815;
+      --blue: #00b4ff;
+      --blue-dim: #00b4ff40;
+      --purple: #a855f7;
+      --amber: #ffb800;
+      --red: #ff4444;
+      --text: #e0e0e8;
+      --text-dim: #6a6a80;
+      --text-mid: #9090a8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ═══ SCANLINES + NOISE ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 255, 136, 0.015) 2px,
+          rgba(0, 255, 136, 0.015) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 136, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 12px var(--green);
+      }
+
+      50% {
+        opacity: 0.5;
+        box-shadow: 0 0 4px var(--green);
+      }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .line1 {
+      color: var(--text);
+    }
+
+    .hero-title .line2 {
+      color: var(--green);
+      text-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+    }
+
+    .hero-title .line3 {
+      color: var(--text-dim);
+      font-weight: 300;
+      font-size: 0.5em;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--text-mid);
+      max-width: 700px;
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      font-weight: 300;
+    }
+
+    .hero-sub strong {
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    /* ═══ LIVE TERMINAL ═══ */
+    .terminal-section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-label::before {
+      content: '▸';
+    }
+
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1rem;
+    }
+
+    .terminal {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .terminal:hover {
+      border-color: var(--green-dim);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.7rem;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .terminal-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .terminal-dots span:nth-child(1) {
+      background: #ff5f57;
+    }
+
+    .terminal-dots span:nth-child(2) {
+      background: #febc2e;
+    }
+
+    .terminal-dots span:nth-child(3) {
+      background: #28c840;
+    }
+
+    .terminal-title {
+      color: var(--text-dim);
+      flex: 1;
+      text-align: center;
+    }
+
+    .terminal-status {
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+
+    .status-live {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--green);
+      animation: pulse-status 3s ease-in-out infinite;
+    }
+
+    .status-ready {
+      background: rgba(0, 180, 255, 0.15);
+      color: var(--blue);
+    }
+
+    .status-processing {
+      background: rgba(255, 184, 0, 0.15);
+      color: var(--amber);
+    }
+
+    @keyframes pulse-status {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .terminal-body {
+      padding: 1rem;
+      font-size: 0.75rem;
+      line-height: 1.8;
+      min-height: 200px;
+      position: relative;
+    }
+
+    .terminal-body .line {
+      opacity: 0;
+      animation: type-in 0.3s forwards;
+    }
+
+    @keyframes type-in {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .prompt {
+      color: var(--green);
+    }
+
+    .cmd {
+      color: var(--text);
+    }
+
+    .output {
+      color: var(--text-dim);
+    }
+
+    .success {
+      color: var(--green);
+    }
+
+    .info {
+      color: var(--blue);
+    }
+
+    .warn {
+      color: var(--amber);
+    }
+
+    .agent-name {
+      color: var(--purple);
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--green);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* ═══ PROJECTS ═══ */
+    .projects-section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .project-card {
+      background: var(--bg-panel);
+      padding: 2rem;
+      position: relative;
+      transition: all 0.4s;
+    }
+
+    .project-card:hover {
+      background: var(--bg-card);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      transition: height 0.4s;
+    }
+
+    .project-card:hover::before {
+      height: 100%;
+    }
+
+    .project-card:nth-child(1)::before {
+      background: var(--green);
+    }
+
+    .project-card:nth-child(2)::before {
+      background: var(--blue);
+    }
+
+    .project-card:nth-child(3)::before {
+      background: var(--purple);
+    }
+
+    .project-card:nth-child(4)::before {
+      background: var(--amber);
+    }
+
+    .project-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .tag {
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--green-dark);
+      color: var(--green);
+      border: 1px solid var(--green-dim);
+    }
+
+    .tag.blue {
+      background: rgba(0, 180, 255, 0.08);
+      color: var(--blue);
+      border-color: var(--blue-dim);
+    }
+
+    .tag.purple {
+      background: rgba(168, 85, 247, 0.08);
+      color: var(--purple);
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+
+    .tag.amber {
+      background: rgba(255, 184, 0, 0.08);
+      color: var(--amber);
+      border-color: rgba(255, 184, 0, 0.3);
+    }
+
+    /* ═══ INFRA ═══ */
+    .infra-section {
+      padding: 4rem 2rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .infra-visual {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .infra-block {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .infra-block:hover {
+      border-color: var(--green-dim);
+      transform: translateY(-2px);
+    }
+
+    .infra-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .infra-block:hover::after {
+      opacity: 1;
+    }
+
+    .infra-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .infra-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══ METHODOLOGY ═══ */
+    .method-section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .method-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-top: 2rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+    }
+
+    .method-step {
+      flex-shrink: 0;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 8px;
+      min-width: 200px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .method-step:hover {
+      border-color: var(--green-dim);
+      background: var(--bg-card);
+    }
+
+    .method-arrow {
+      flex-shrink: 0;
+      color: var(--green-dim);
+      font-size: 1.5rem;
+      padding: 0 0.5rem;
+    }
+
+    .method-step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 0.3rem;
+    }
+
+    .method-step-desc {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ═══ CONTACT ═══ */
+    .contact-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-text {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--green);
+      background: var(--green-dark);
+      color: var(--green);
+    }
+
+    .contact-link.primary {
+      background: var(--green);
+      color: var(--bg-deep);
+      border-color: var(--green);
+      font-weight: 500;
+    }
+
+    .contact-link.primary:hover {
+      background: #00cc6e;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+    }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ═══ SCROLL ANIMATIONS ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .terminal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .method-flow {
+        flex-direction: column;
+      }
+
+      .method-arrow {
+        transform: rotate(90deg);
+      }
+
+      .infra-visual {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="status-bar">
-      <span class="status-dot"></span>
-      <span>SYSTEM ONLINE</span>
-      <span style="margin-left:auto; color:var(--green)">31 agents active</span>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="status-bar">
+        <span class="status-dot"></span>
+        <span>SYSTEM ONLINE</span>
+        <span style="margin-left:auto; color:var(--green)">31 agents active</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line1">Carlos De La</span><br>
+        <span class="line2">Torre</span><br>
+        <span class="line1" style="font-size:0.45em; font-weight:400; color:var(--text-mid);">IA Orquestador</span><br>
+        <span class="line3">// hago que la IA trabaje por ti</span>
+      </h1>
+
+      <p class="hero-sub">
+        No programo código — <strong>diseño arquitecturas donde 30 agentes IA trabajan en paralelo</strong>.
+        Entiendo cómo piensa Claude. Entiendo cómo hacer que resuelva lo que otros no logran.
+        Si se puede sistematizar, se puede potenciar con IA.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">31</div>
+          <div class="stat-label">Agentes IA activos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Productos en producción</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">23</div>
+          <div class="stat-label">Containers Docker</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">21+</div>
+          <div class="stat-label">Años en infraestructura</div>
+        </div>
+      </div>
     </div>
-    
-    <h1 class="hero-title">
-      <span class="line1">Carlos De La</span><br>
-      <span class="line2">Torre</span><br>
-      <span class="line1" style="font-size:0.45em; font-weight:400; color:var(--text-mid);">IA Orquestador</span><br>
-      <span class="line3">// hago que la IA trabaje por ti</span>
-    </h1>
-    
-    <p class="hero-sub">
-      No programo código — <strong>diseño arquitecturas donde 30 agentes IA trabajan en paralelo</strong>. 
-      Entiendo cómo piensa Claude. Entiendo cómo hacer que resuelva lo que otros no logran. 
-      Si se puede sistematizar, se puede potenciar con IA.
+  </section>
+
+  <!-- ═══ LIVE TERMINALS ═══ -->
+  <section class="terminal-section">
+    <div class="section-label">Orquestación en tiempo real</div>
+    <div class="terminal-grid">
+
+      <!-- Terminal 1: GSD Workflow -->
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
+          <span class="terminal-title">tmux:0 — gsd-orchestrator</span>
+          <span class="terminal-status status-live">● LIVE</span>
+        </div>
+        <div class="terminal-body" id="term1"></div>
+      </div>
+
+      <!-- Terminal 2: Agents -->
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
+          <span class="terminal-title">tmux:1 — agent-pool</span>
+          <span class="terminal-status status-processing">● WORKING</span>
+        </div>
+        <div class="terminal-body" id="term2"></div>
+      </div>
+
+      <!-- Terminal 3: Infra -->
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
+          <span class="terminal-title">tmux:2 — infrastructure</span>
+          <span class="terminal-status status-ready">● HEALTHY</span>
+        </div>
+        <div class="terminal-body" id="term3"></div>
+      </div>
+
+      <!-- Terminal 4: Deploy -->
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dots"><span></span><span></span><span></span></div>
+          <span class="terminal-title">tmux:3 — deploy-pipeline</span>
+          <span class="terminal-status status-live">● LIVE</span>
+        </div>
+        <div class="terminal-body" id="term4"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ METHODOLOGY ═══ -->
+  <section class="method-section reveal">
+    <div class="section-label">Metodología de orquestación</div>
+    <div class="method-flow">
+      <div class="method-step">
+        <div class="method-step-title">TASKMASTER</div>
+        <div class="method-step-desc">17 proyectos en JSON<br>Priorización automática</div>
+      </div>
+      <div class="method-arrow">→</div>
+      <div class="method-step">
+        <div class="method-step-title">GSD WORKFLOW</div>
+        <div class="method-step-desc">27 comandos<br>Asignación a agentes</div>
+      </div>
+      <div class="method-arrow">→</div>
+      <div class="method-step">
+        <div class="method-step-title">CLAUDE-FLOW</div>
+        <div class="method-step-desc">v2.7.47 orquestador<br>30 agentes paralelos</div>
+      </div>
+      <div class="method-arrow">→</div>
+      <div class="method-step">
+        <div class="method-step-title">RALF</div>
+        <div class="method-step-desc">Framework de tareas<br>Memoria persistente</div>
+      </div>
+      <div class="method-arrow">→</div>
+      <div class="method-step">
+        <div class="method-step-title">DEPLOY</div>
+        <div class="method-step-desc">Push → Coolify<br>&lt;3 min a producción</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROJECTS ═══ -->
+  <section class="projects-section reveal">
+    <div class="section-label">Productos en producción</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">📈</div>
+        <div class="project-name">IATRADER</div>
+        <div class="project-desc">
+          Trading automatizado 24/7. Motor Visionario Fractal con Gemini AI.
+          2 instancias MetaTrader 5 en Linux. Pool de 8 API keys.
+          109+ scripts Python de análisis técnico.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Gemini AI</span>
+          <span class="tag">MetaTrader 5</span>
+          <span class="tag">Wine/Linux</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">📊</div>
+        <div class="project-name">GestoriaRD</div>
+        <div class="project-desc">
+          Gestión contable con IA. 71 tablas PostgreSQL. Scraping gubernamental
+          anti-detección. Chat IA tributario con Perplexity.
+          CI/CD en &lt;3 minutos.
+        </div>
+        <div class="project-tags">
+          <span class="tag blue">Next.js 15</span>
+          <span class="tag blue">PostgreSQL</span>
+          <span class="tag blue">Perplexity</span>
+          <span class="tag blue">Playwright</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🧾</div>
+        <div class="project-name">FacturaIA</div>
+        <div class="project-desc">
+          SaaS multi-tenant de facturación inteligente. OCR con Gemini API.
+          App Android. Arquitectura para 100 firmas × 300 clientes.
+        </div>
+        <div class="project-tags">
+          <span class="tag purple">Gemini OCR</span>
+          <span class="tag purple">React Native</span>
+          <span class="tag purple">Multi-tenant</span>
+          <span class="tag purple">SaaS</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🎰</div>
+        <div class="project-name">Casino QR</div>
+        <div class="project-desc">
+          Tickets QR encriptados para casinos. PWA en tablets.
+          Validación en tiempo real. Multi-moneda USD/DOP.
+          Reportes por turno.
+        </div>
+        <div class="project-tags">
+          <span class="tag amber">PWA</span>
+          <span class="tag amber">QR Crypto</span>
+          <span class="tag amber">Real-time</span>
+          <span class="tag amber">Multi-currency</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ INFRASTRUCTURE ═══ -->
+  <section class="infra-section reveal">
+    <div class="section-label">Infraestructura cloud autogestionada</div>
+    <div class="infra-visual">
+      <div class="infra-block">
+        <div class="infra-number">8</div>
+        <div class="infra-label">CPU Cores</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">23<span style="font-size:0.5em">GB</span></div>
+        <div class="infra-label">RAM</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">23</div>
+        <div class="infra-label">Docker Containers</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">71</div>
+        <div class="infra-label">Tablas PostgreSQL</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">147</div>
+        <div class="infra-label">AppArmor Profiles</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">54</div>
+        <div class="infra-label">UFW Rules</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">109+</div>
+        <div class="infra-label">Python Scripts</div>
+      </div>
+      <div class="infra-block">
+        <div class="infra-number">27</div>
+        <div class="infra-label">GSD Commands</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="contact-section reveal">
+    <div class="contact-title" style="font-family:'Syne',sans-serif;">
+      ¿Necesitas que la IA trabaje<br><span style="color:var(--green)">para tu empresa?</span>
+    </div>
+    <p class="contact-text">
+      No existe sistema de información que no pueda crear, automatizar
+      o desarrollar con IA. Cuéntame qué necesitas.
     </p>
-    
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-value">31</div>
-        <div class="stat-label">Agentes IA activos</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">5</div>
-        <div class="stat-label">Productos en producción</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">23</div>
-        <div class="stat-label">Containers Docker</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">21+</div>
-        <div class="stat-label">Años en infraestructura</div>
-      </div>
+    <div class="contact-links">
+      <a href="mailto:radelqui@gmail.com" class="contact-link primary">
+        ✉ Escríbeme
+      </a>
+      <a href="https://wa.me/18094240731" target="_blank" class="contact-link">
+        📱 WhatsApp
+      </a>
+      <a href="Carlos_De_La_Torre_CV.pdf" download class="contact-link">
+        ⬇ Descargar CV
+      </a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ LIVE TERMINALS ═══ -->
-<section class="terminal-section">
-  <div class="section-label">Orquestación en tiempo real</div>
-  <div class="terminal-grid">
-    
-    <!-- Terminal 1: GSD Workflow -->
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="terminal-dots"><span></span><span></span><span></span></div>
-        <span class="terminal-title">tmux:0 — gsd-orchestrator</span>
-        <span class="terminal-status status-live">● LIVE</span>
-      </div>
-      <div class="terminal-body" id="term1"></div>
-    </div>
-    
-    <!-- Terminal 2: Agents -->
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="terminal-dots"><span></span><span></span><span></span></div>
-        <span class="terminal-title">tmux:1 — agent-pool</span>
-        <span class="terminal-status status-processing">● WORKING</span>
-      </div>
-      <div class="terminal-body" id="term2"></div>
-    </div>
-    
-    <!-- Terminal 3: Infra -->
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="terminal-dots"><span></span><span></span><span></span></div>
-        <span class="terminal-title">tmux:2 — infrastructure</span>
-        <span class="terminal-status status-ready">● HEALTHY</span>
-      </div>
-      <div class="terminal-body" id="term3"></div>
-    </div>
-    
-    <!-- Terminal 4: Deploy -->
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="terminal-dots"><span></span><span></span><span></span></div>
-        <span class="terminal-title">tmux:3 — deploy-pipeline</span>
-        <span class="terminal-status status-live">● LIVE</span>
-      </div>
-      <div class="terminal-body" id="term4"></div>
-    </div>
-    
-  </div>
-</section>
+  <footer class="footer">
+    <span style="color:var(--green)">▸</span> Carlos De La Torre — IA Orquestador — 2024-2026
+    <br>
+    <span style="color:var(--text-dim); font-size:0.6rem;">
+      Esta página fue orquestada con Claude. Porque así es como trabajo.
+    </span>
+  </footer>
 
-<!-- ═══ METHODOLOGY ═══ -->
-<section class="method-section reveal">
-  <div class="section-label">Metodología de orquestación</div>
-  <div class="method-flow">
-    <div class="method-step">
-      <div class="method-step-title">TASKMASTER</div>
-      <div class="method-step-desc">17 proyectos en JSON<br>Priorización automática</div>
-    </div>
-    <div class="method-arrow">→</div>
-    <div class="method-step">
-      <div class="method-step-title">GSD WORKFLOW</div>
-      <div class="method-step-desc">27 comandos<br>Asignación a agentes</div>
-    </div>
-    <div class="method-arrow">→</div>
-    <div class="method-step">
-      <div class="method-step-title">CLAUDE-FLOW</div>
-      <div class="method-step-desc">v2.7.47 orquestador<br>30 agentes paralelos</div>
-    </div>
-    <div class="method-arrow">→</div>
-    <div class="method-step">
-      <div class="method-step-title">RALF</div>
-      <div class="method-step-desc">Framework de tareas<br>Memoria persistente</div>
-    </div>
-    <div class="method-arrow">→</div>
-    <div class="method-step">
-      <div class="method-step-title">DEPLOY</div>
-      <div class="method-step-desc">Push → Coolify<br>&lt;3 min a producción</div>
-    </div>
-  </div>
-</section>
+  <script>
+    // ═══ TERMINAL SIMULATION ═══
 
-<!-- ═══ PROJECTS ═══ -->
-<section class="projects-section reveal">
-  <div class="section-label">Productos en producción</div>
-  <div class="projects-grid">
-    
-    <div class="project-card">
-      <div class="project-icon">📈</div>
-      <div class="project-name">IATRADER</div>
-      <div class="project-desc">
-        Trading automatizado 24/7. Motor Visionario Fractal con Gemini AI. 
-        2 instancias MetaTrader 5 en Linux. Pool de 8 API keys. 
-        109+ scripts Python de análisis técnico.
-      </div>
-      <div class="project-tags">
-        <span class="tag">Python</span>
-        <span class="tag">Gemini AI</span>
-        <span class="tag">MetaTrader 5</span>
-        <span class="tag">Wine/Linux</span>
-      </div>
-    </div>
-    
-    <div class="project-card">
-      <div class="project-icon">📊</div>
-      <div class="project-name">GestoriaRD</div>
-      <div class="project-desc">
-        Gestión contable con IA. 71 tablas PostgreSQL. Scraping gubernamental 
-        anti-detección. Chat IA tributario con Perplexity. 
-        CI/CD en &lt;3 minutos.
-      </div>
-      <div class="project-tags">
-        <span class="tag blue">Next.js 15</span>
-        <span class="tag blue">PostgreSQL</span>
-        <span class="tag blue">Perplexity</span>
-        <span class="tag blue">Playwright</span>
-      </div>
-    </div>
-    
-    <div class="project-card">
-      <div class="project-icon">🧾</div>
-      <div class="project-name">FacturaIA</div>
-      <div class="project-desc">
-        SaaS multi-tenant de facturación inteligente. OCR con Gemini API. 
-        App Android. Arquitectura para 100 firmas × 300 clientes.
-      </div>
-      <div class="project-tags">
-        <span class="tag purple">Gemini OCR</span>
-        <span class="tag purple">React Native</span>
-        <span class="tag purple">Multi-tenant</span>
-        <span class="tag purple">SaaS</span>
-      </div>
-    </div>
-    
-    <div class="project-card">
-      <div class="project-icon">🎰</div>
-      <div class="project-name">Casino QR</div>
-      <div class="project-desc">
-        Tickets QR encriptados para casinos. PWA en tablets. 
-        Validación en tiempo real. Multi-moneda USD/DOP. 
-        Reportes por turno.
-      </div>
-      <div class="project-tags">
-        <span class="tag amber">PWA</span>
-        <span class="tag amber">QR Crypto</span>
-        <span class="tag amber">Real-time</span>
-        <span class="tag amber">Multi-currency</span>
-      </div>
-    </div>
-    
-  </div>
-</section>
+    const terminals = {
+      term1: [
+        { text: '$ gsd orchestrate --project=all', cls: 'prompt', delay: 0 },
+        { text: '⚡ Loading 17 projects from taskmaster.json...', cls: 'output', delay: 800 },
+        { text: '✓ IATRADER         [priority: HIGH]  → agent-trader-01', cls: 'success', delay: 1200 },
+        { text: '✓ GestoriaRD       [priority: HIGH]  → agent-web-03', cls: 'success', delay: 1600 },
+        { text: '✓ FacturaIA        [priority: MED]   → agent-ocr-02', cls: 'success', delay: 2000 },
+        { text: '✓ CasinoQR         [priority: MED]   → agent-pwa-04', cls: 'success', delay: 2400 },
+        { text: '⚡ 31 agents dispatched across 5 tmux sessions', cls: 'info', delay: 3000 },
+        { text: '$ █', cls: 'prompt', delay: 3800, cursor: true },
+      ],
+      term2: [
+        { text: '$ claude-flow status --verbose', cls: 'prompt', delay: 500 },
+        { text: 'Claude-Flow v2.7.47 — Multi-Agent Orchestrator', cls: 'info', delay: 1200 },
+        { text: '─────────────────────────────────────', cls: 'output', delay: 1400 },
+        { text: '▸ agent-trader-01  [Claude]    analyzing EURUSD...', cls: 'agent-name', delay: 1800 },
+        { text: '▸ agent-web-03     [Claude]    deploying gestoria v4.2...', cls: 'agent-name', delay: 2200 },
+        { text: '▸ agent-ocr-02     [Gemini]    processing 847 invoices...', cls: 'agent-name', delay: 2600 },
+        { text: '▸ agent-scraper-05 [Camoufox]  scraping TSS portal...', cls: 'agent-name', delay: 3000 },
+        { text: '▸ agent-security-07 [System]   AppArmor: 147 profiles OK', cls: 'success', delay: 3400 },
+        { text: '✓ All 31 agents: HEALTHY', cls: 'success', delay: 4000 },
+        { text: '$ █', cls: 'prompt', delay: 4600, cursor: true },
+      ],
+      term3: [
+        { text: '$ docker ps --format "{{.Names}}: {{.Status}}"', cls: 'prompt', delay: 300 },
+        { text: 'supabase-db:        Up 47 days (healthy)', cls: 'output', delay: 1000 },
+        { text: 'supabase-rest:      Up 47 days (healthy)', cls: 'output', delay: 1200 },
+        { text: 'coolify:            Up 47 days (healthy)', cls: 'output', delay: 1400 },
+        { text: 'traefik:            Up 47 days (healthy)', cls: 'output', delay: 1600 },
+        { text: 'gestoria-next:      Up 12 days (healthy)', cls: 'output', delay: 1800 },
+        { text: 'iatrader-mt5-1:     Up 30 days (healthy)', cls: 'output', delay: 2000 },
+        { text: 'iatrader-mt5-2:     Up 30 days (healthy)', cls: 'output', delay: 2200 },
+        { text: 'n8n-workflows:      Up 47 days (healthy)', cls: 'output', delay: 2400 },
+        { text: '... +15 more containers', cls: 'output', delay: 2800 },
+        { text: '✓ 23/23 containers: ALL HEALTHY', cls: 'success', delay: 3200 },
+        { text: '$ █', cls: 'prompt', delay: 3800, cursor: true },
+      ],
+      term4: [
+        { text: '$ git push origin main', cls: 'prompt', delay: 700 },
+        { text: 'Enumerating objects: 47, done.', cls: 'output', delay: 1400 },
+        { text: 'remote: Resolving deltas: 100% (23/23)', cls: 'output', delay: 1800 },
+        { text: '⚡ Coolify webhook triggered...', cls: 'info', delay: 2200 },
+        { text: '▸ Building Next.js 15 production...', cls: 'output', delay: 2600 },
+        { text: '▸ Docker image: gestoria:v4.2.1 (247MB)', cls: 'output', delay: 3200 },
+        { text: '▸ Health check: ✓ passed', cls: 'success', delay: 3600 },
+        { text: '▸ Traefik SSL: ✓ renewed', cls: 'success', delay: 3800 },
+        { text: '✓ Deployed in 2m 47s → gestoria.chrytsa.com', cls: 'success', delay: 4200 },
+        { text: '$ █', cls: 'prompt', delay: 4800, cursor: true },
+      ]
+    };
 
-<!-- ═══ INFRASTRUCTURE ═══ -->
-<section class="infra-section reveal">
-  <div class="section-label">Infraestructura cloud autogestionada</div>
-  <div class="infra-visual">
-    <div class="infra-block">
-      <div class="infra-number">8</div>
-      <div class="infra-label">CPU Cores</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">23<span style="font-size:0.5em">GB</span></div>
-      <div class="infra-label">RAM</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">23</div>
-      <div class="infra-label">Docker Containers</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">71</div>
-      <div class="infra-label">Tablas PostgreSQL</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">147</div>
-      <div class="infra-label">AppArmor Profiles</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">54</div>
-      <div class="infra-label">UFW Rules</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">109+</div>
-      <div class="infra-label">Python Scripts</div>
-    </div>
-    <div class="infra-block">
-      <div class="infra-number">27</div>
-      <div class="infra-label">GSD Commands</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CONTACT ═══ -->
-<section class="contact-section reveal">
-  <div class="contact-title" style="font-family:'Syne',sans-serif;">
-    ¿Necesitas que la IA trabaje<br><span style="color:var(--green)">para tu empresa?</span>
-  </div>
-  <p class="contact-text">
-    No existe sistema de información que no pueda crear, automatizar 
-    o desarrollar con IA. Cuéntame qué necesitas.
-  </p>
-  <div class="contact-links">
-    <a href="mailto:radelqui@gmail.com" class="contact-link primary">
-      ✉ Escríbeme
-    </a>
-    <a href="https://wa.me/18094240731" target="_blank" class="contact-link">
-      📱 WhatsApp
-    </a>
-    <a href="Carlos_De_La_Torre_CV.pdf" download class="contact-link">
-      ⬇ Descargar CV
-    </a>
-  </div>
-</section>
-
-<footer class="footer">
-  <span style="color:var(--green)">▸</span> Carlos De La Torre — IA Orquestador — 2024-2026
-  <br>
-  <span style="color:var(--text-dim); font-size:0.6rem;">
-    Esta página fue orquestada con Claude. Porque así es como trabajo.
-  </span>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ═══ TERMINAL SIMULATION ═══
-
-const terminals = {
-  term1: [
-    { text: '$ gsd orchestrate --project=all', cls: 'prompt', delay: 0 },
-    { text: '⚡ Loading 17 projects from taskmaster.json...', cls: 'output', delay: 800 },
-    { text: '✓ IATRADER         [priority: HIGH]  → agent-trader-01', cls: 'success', delay: 1200 },
-    { text: '✓ GestoriaRD       [priority: HIGH]  → agent-web-03', cls: 'success', delay: 1600 },
-    { text: '✓ FacturaIA        [priority: MED]   → agent-ocr-02', cls: 'success', delay: 2000 },
-    { text: '✓ CasinoQR         [priority: MED]   → agent-pwa-04', cls: 'success', delay: 2400 },
-    { text: '⚡ 31 agents dispatched across 5 tmux sessions', cls: 'info', delay: 3000 },
-    { text: '$ █', cls: 'prompt', delay: 3800, cursor: true },
-  ],
-  term2: [
-    { text: '$ claude-flow status --verbose', cls: 'prompt', delay: 500 },
-    { text: 'Claude-Flow v2.7.47 — Multi-Agent Orchestrator', cls: 'info', delay: 1200 },
-    { text: '─────────────────────────────────────', cls: 'output', delay: 1400 },
-    { text: '▸ agent-trader-01  [Claude]    analyzing EURUSD...', cls: 'agent-name', delay: 1800 },
-    { text: '▸ agent-web-03     [Claude]    deploying gestoria v4.2...', cls: 'agent-name', delay: 2200 },
-    { text: '▸ agent-ocr-02     [Gemini]    processing 847 invoices...', cls: 'agent-name', delay: 2600 },
-    { text: '▸ agent-scraper-05 [Camoufox]  scraping TSS portal...', cls: 'agent-name', delay: 3000 },
-    { text: '▸ agent-security-07 [System]   AppArmor: 147 profiles OK', cls: 'success', delay: 3400 },
-    { text: '✓ All 31 agents: HEALTHY', cls: 'success', delay: 4000 },
-    { text: '$ █', cls: 'prompt', delay: 4600, cursor: true },
-  ],
-  term3: [
-    { text: '$ docker ps --format "{{.Names}}: {{.Status}}"', cls: 'prompt', delay: 300 },
-    { text: 'supabase-db:        Up 47 days (healthy)', cls: 'output', delay: 1000 },
-    { text: 'supabase-rest:      Up 47 days (healthy)', cls: 'output', delay: 1200 },
-    { text: 'coolify:            Up 47 days (healthy)', cls: 'output', delay: 1400 },
-    { text: 'traefik:            Up 47 days (healthy)', cls: 'output', delay: 1600 },
-    { text: 'gestoria-next:      Up 12 days (healthy)', cls: 'output', delay: 1800 },
-    { text: 'iatrader-mt5-1:     Up 30 days (healthy)', cls: 'output', delay: 2000 },
-    { text: 'iatrader-mt5-2:     Up 30 days (healthy)', cls: 'output', delay: 2200 },
-    { text: 'n8n-workflows:      Up 47 days (healthy)', cls: 'output', delay: 2400 },
-    { text: '... +15 more containers', cls: 'output', delay: 2800 },
-    { text: '✓ 23/23 containers: ALL HEALTHY', cls: 'success', delay: 3200 },
-    { text: '$ █', cls: 'prompt', delay: 3800, cursor: true },
-  ],
-  term4: [
-    { text: '$ git push origin main', cls: 'prompt', delay: 700 },
-    { text: 'Enumerating objects: 47, done.', cls: 'output', delay: 1400 },
-    { text: 'remote: Resolving deltas: 100% (23/23)', cls: 'output', delay: 1800 },
-    { text: '⚡ Coolify webhook triggered...', cls: 'info', delay: 2200 },
-    { text: '▸ Building Next.js 15 production...', cls: 'output', delay: 2600 },
-    { text: '▸ Docker image: gestoria:v4.2.1 (247MB)', cls: 'output', delay: 3200 },
-    { text: '▸ Health check: ✓ passed', cls: 'success', delay: 3600 },
-    { text: '▸ Traefik SSL: ✓ renewed', cls: 'success', delay: 3800 },
-    { text: '✓ Deployed in 2m 47s → gestoria.chrytsa.com', cls: 'success', delay: 4200 },
-    { text: '$ █', cls: 'prompt', delay: 4800, cursor: true },
-  ]
-};
-
-function animateTerminal(id, lines) {
-  const el = document.getElementById(id);
-  lines.forEach((line, i) => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = `line ${line.cls}`;
-      div.style.animationDelay = '0s';
-      if (line.cursor) {
-        div.innerHTML = line.text.replace('█', '<span class="cursor-blink"></span>');
-      } else {
-        div.textContent = line.text;
-      }
-      el.appendChild(div);
-      el.scrollTop = el.scrollHeight;
-    }, line.delay);
-  });
-}
-
-// Start terminal animations when visible
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      if (terminals[id] && !entry.target.dataset.animated) {
-        entry.target.dataset.animated = 'true';
-        animateTerminal(id, terminals[id]);
-      }
+    function animateTerminal(id, lines) {
+      const el = document.getElementById(id);
+      lines.forEach((line, i) => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = `line ${line.cls}`;
+          div.style.animationDelay = '0s';
+          if (line.cursor) {
+            div.innerHTML = line.text.replace('█', '<span class="cursor-blink"></span>');
+          } else {
+            div.textContent = line.text;
+          }
+          el.appendChild(div);
+          el.scrollTop = el.scrollHeight;
+        }, line.delay);
+      });
     }
-  });
-}, { threshold: 0.3 });
 
-document.querySelectorAll('.terminal-body').forEach(el => observer.observe(el));
+    // Start terminal animations when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          if (terminals[id] && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+            animateTerminal(id, terminals[id]);
+          }
+        }
+      });
+    }, { threshold: 0.3 });
 
-// Scroll reveal
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
+    document.querySelectorAll('.terminal-body').forEach(el => observer.observe(el));
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
 
-// Re-run terminals periodically
-setInterval(() => 
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Re-run terminals periodically
+    setInterval(() => {
+      document.querySelectorAll('.terminal-body').forEach(el => {
+        if (el.dataset.animated) {
+          el.innerHTML = '';
+          el.dataset.animated = '';
+          animateTerminal(el.id, terminals[el.id]);
+          el.dataset.animated = 'true';
+        }
+      });
+    }, 15000);
+
+  </script>
+</body>
+
+</html>
