@@ -35,7 +35,6 @@
             cursor: default;
         }
 
-        /* SCANLINES & NOISE */
         body::before {
             content: "";
             position: fixed;
@@ -54,7 +53,6 @@
             z-index: 1;
         }
 
-        /* HERO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -79,11 +77,13 @@
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            text-align: center;
         }
 
         .status-bar {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             margin-bottom: 2rem;
             font-size: 0.75rem;
@@ -108,20 +108,18 @@
             font-family: 'Syne', sans-serif;
             font-size: clamp(2.5rem, 7vw, 5.5rem);
             font-weight: 800;
-            line-height: 1;
+            line-height: 0.9;
             letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
-        .hero-title .line1 { color: var(--text); }
-        .hero-title .line2 { 
+        .hero-title .line1, .hero-title .line2 { color: var(--text); }
+        .hero-title .line3 { 
             color: var(--green); 
             text-shadow: 0 0 40px rgba(0,255,136,0.3);
-        }
-        .hero-title .line3 {
-            color: var(--text-dim);
-            font-weight: 300;
-            font-size: 0.5em;
+            display: block;
+            margin-top: 0.5rem;
         }
 
         .hero-sub {
@@ -129,7 +127,7 @@
             color: var(--text-mid);
             max-width: 700px;
             line-height: 1.7;
-            margin-top: 1.5rem;
+            margin: 1.5rem auto 0;
             font-weight: 300;
         }
 
@@ -140,9 +138,10 @@
             gap: 3rem;
             margin-top: 3rem;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .stat { text-align: left; }
+        .stat { text-align: center; }
         .stat-value {
             font-family: 'Syne', sans-serif;
             font-size: 2.5rem;
@@ -158,7 +157,6 @@
             margin-top: 0.25rem;
         }
 
-        /* LIVE TERMINAL */
         .terminal-section {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -176,9 +174,7 @@
             gap: 0.5rem;
         }
 
-        .section-label::before {
-            content: "//";
-        }
+        .section-label::before { content: "//"; }
 
         .terminal-grid {
             display: grid;
@@ -262,7 +258,6 @@
 
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* PROJECTS */
         .projects-section {
             padding: 6rem 2rem;
             max-width: 1200px;
@@ -322,7 +317,6 @@
         .tag.purple { background: rgba(168,85,247,0.08); color: var(--purple); border-color: rgba(168,85,247,0.3); }
         .tag.amber { background: rgba(255,184,0,0.08); color: var(--amber); border-color: rgba(255,184,0,0.3); }
 
-        /* INFRA */
         .infra-section {
             padding: 4rem 2rem 6rem;
             max-width: 1200px;
@@ -381,7 +375,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* METHODOLOGY */
         .method-section {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -434,7 +427,6 @@
             line-height: 1.5;
         }
 
-        /* CONTACT */
         .contact-section {
             padding: 6rem 2rem;
             text-align: center;
@@ -506,7 +498,6 @@
             box-shadow: 0 0 30px rgba(0,255,136,0.3);
         }
 
-        /* FOOTER */
         .footer {
             padding: 2rem;
             text-align: center;
@@ -515,7 +506,6 @@
             border-top: 1px solid var(--border);
         }
 
-        /* SCROLL ANIMATIONS */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -527,7 +517,6 @@
             transform: translateY(0);
         }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .hero-stats { gap: 1.5rem; }
             .terminal-grid { grid-template-columns: 1fr; }
@@ -539,20 +528,19 @@
 </head>
 <body>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="hero-grid"></div>
         <div class="hero-content">
             <div class="status-bar">
                 <span class="status-dot"></span>
                 <span>SYSTEM ONLINE</span>
-                <span style="margin-left: auto; color: var(--green)">31 agents active</span>
+                <span style="color: var(--green); margin-left: 1rem;">31 agents active</span>
             </div>
             
             <h1 class="hero-title">
-                <span class="line1">Carlos De La Torre</span><br>
-                <span class="line2">IA Orquestador</span><br>
-                <span class="line3"> hago que la IA trabaje por ti</span>
+                <span class="line1">Carlos De La</span><br>
+                <span class="line2">Torre</span><br>
+                <span class="line3">IA Orquestador</span>
             </h1>
 
             <p class="hero-sub">
@@ -580,11 +568,9 @@
         </div>
     </section>
 
-    <!-- LIVE TERMINALS -->
     <section class="terminal-section">
         <div class="section-label">Orquestación en tiempo real</div>
         <div class="terminal-grid">
-            <!-- Terminal 1: GSD Workflow -->
             <div class="terminal">
                 <div class="terminal-header">
                     <div class="terminal-dots"><span></span><span></span><span></span></div>
@@ -594,7 +580,6 @@
                 <div class="terminal-body" id="term1"></div>
             </div>
 
-            <!-- Terminal 2: Agents -->
             <div class="terminal">
                 <div class="terminal-header">
                     <div class="terminal-dots"><span></span><span></span><span></span></div>
@@ -604,7 +589,6 @@
                 <div class="terminal-body" id="term2"></div>
             </div>
 
-            <!-- Terminal 3: Infra -->
             <div class="terminal">
                 <div class="terminal-header">
                     <div class="terminal-dots"><span></span><span></span><span></span></div>
@@ -614,7 +598,6 @@
                 <div class="terminal-body" id="term3"></div>
             </div>
 
-            <!-- Terminal 4: Deploy -->
             <div class="terminal">
                 <div class="terminal-header">
                     <div class="terminal-dots"><span></span><span></span><span></span></div>
@@ -626,7 +609,6 @@
         </div>
     </section>
 
-    <!-- METHODOLOGY -->
     <section class="method-section reveal">
         <div class="section-label">Metodología de orquestación</div>
         <div class="method-flow">
@@ -657,7 +639,6 @@
         </div>
     </section>
 
-    <!-- PROJECTS -->
     <section class="projects-section reveal">
         <div class="section-label">Productos en producción</div>
         <div class="projects-grid">
@@ -719,7 +700,6 @@
         </div>
     </section>
 
-    <!-- INFRASTRUCTURE -->
     <section class="infra-section reveal">
         <div class="section-label">Infraestructura cloud autogestionada</div>
         <div class="infra-visual">
@@ -758,7 +738,6 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
     <section class="contact-section reveal">
         <div class="contact-title" style="font-family: 'Syne', sans-serif;">
             ¿Necesitas que la IA trabaje<br><span style="color: var(--green)">para tu empresa?</span>
@@ -767,15 +746,9 @@
             No existe sistema de información que no pueda crear, automatizar o desarrollar con IA. Cuéntame qué necesitas.
         </p>
         <div class="contact-links">
-            <a href="mailto:radelqui@gmail.com" class="contact-link primary">
-                Escríbeme a 
-            </a>
-            <a href="https://wa.me/18094240731" target="_blank" class="contact-link">
-                WhatsApp
-            </a>
-            <a href="CarlosDeLaTorreCV.pdf" download class="contact-link">
-                Descargar CV
-            </a>
+            <a href="mailto:radelqui@gmail.com" class="contact-link primary">Escríbeme a</a>
+            <a href="https://wa.me/18094240731" target="_blank" class="contact-link">WhatsApp</a>
+            <a href="CarlosDeLaTorreCV.pdf" download class="contact-link">Descargar CV</a>
         </div>
     </section>
 
@@ -785,7 +758,6 @@
     </footer>
 
     <script>
-        // TERMINAL SIMULATION
         const terminals = {
             term1: {
                 lines: [
@@ -851,21 +823,17 @@
                 setTimeout(() => {
                     const div = document.createElement('div');
                     div.className = `line ${line.cls}`;
-                    div.style.animationDelay = '0s';
-                    
                     if (line.cursor) {
                         div.innerHTML = line.text + '<span class="cursor-blink"></span>';
                     } else {
                         div.textContent = line.text;
                     }
-                    
                     el.appendChild(div);
                     el.scrollTop = el.scrollHeight;
                 }, line.delay);
             });
         }
 
-        // Start terminal animations when visible
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -880,7 +848,6 @@
 
         document.querySelectorAll('.terminal-body').forEach(el => observer.observe(el));
 
-        // Scroll reveal
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
