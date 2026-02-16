@@ -18,8 +18,8 @@
       font-family: 'Inter', -apple-system, sans-serif;
       color: #1a1a2e;
       background: #fff;
-      font-size: 10.5px;
-      line-height: 1.5;
+      font-size: 9.5px;
+      line-height: 1.45;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -28,22 +28,22 @@
       width: 210mm;
       min-height: 297mm;
       margin: 0 auto;
-      padding: 28px 32px 24px;
+      padding: 22px 28px 18px;
       position: relative;
     }
 
-    /* ═══ HEADER ═══ */
+    /* HEADER */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      padding-bottom: 14px;
+      padding-bottom: 10px;
       border-bottom: 2.5px solid #00cc6e;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .header-left h1 {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
       color: #0a0a1a;
       letter-spacing: -0.5px;
@@ -51,23 +51,23 @@
     }
 
     .header-left .title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: #00995a;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     .header-left .subtitle {
-      font-size: 10px;
+      font-size: 9px;
       color: #666;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .header-right {
       text-align: right;
-      font-size: 9.5px;
+      font-size: 9px;
       color: #444;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .header-right a {
@@ -75,36 +75,46 @@
       text-decoration: none;
     }
 
-    /* ═══ SECTIONS ═══ */
+    .nationality-badge {
+      display: inline-block;
+      background: #f0f7ff;
+      border: 1.5px solid #1a56db;
+      color: #1a56db;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 3px;
+    }
+
+    /* SECTIONS */
     .section {
-      margin-bottom: 14px;
+      margin-bottom: 9px;
     }
 
     .section-title {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: #00995a;
       border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 3px;
-      margin-bottom: 8px;
+      padding-bottom: 2px;
+      margin-bottom: 5px;
     }
 
-    /* ═══ SUMMARY ═══ */
+    /* SUMMARY */
     .summary {
-      font-size: 10.5px;
+      font-size: 9.5px;
       color: #333;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    .summary strong {
-      color: #0a0a1a;
-    }
+    .summary strong { color: #0a0a1a; }
 
-    /* ═══ EXPERIENCE ═══ */
+    /* EXPERIENCE */
     .exp-item {
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     .exp-header {
@@ -114,149 +124,140 @@
     }
 
     .exp-role {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: #0a0a1a;
     }
 
     .exp-date {
-      font-size: 9px;
+      font-size: 8px;
       color: #888;
       white-space: nowrap;
     }
 
     .exp-company {
-      font-size: 10px;
+      font-size: 9px;
       color: #00995a;
       font-weight: 500;
     }
 
     .exp-desc {
-      font-size: 10px;
+      font-size: 9px;
       color: #444;
-      margin-top: 3px;
-      line-height: 1.55;
+      margin-top: 1px;
+      line-height: 1.45;
     }
 
-    .exp-desc ul {
-      padding-left: 14px;
-      margin-top: 2px;
-    }
-
-    .exp-desc li {
-      margin-bottom: 1px;
-    }
-
-    /* ═══ PROJECTS ═══ */
+    /* PROJECTS */
     .projects-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
     }
 
     .project {
       background: #f8faf9;
       border: 1px solid #e8ece9;
       border-left: 3px solid #00cc6e;
-      padding: 8px 10px;
+      padding: 6px 8px;
       border-radius: 3px;
     }
 
     .project-name {
-      font-size: 10.5px;
+      font-size: 9.5px;
       font-weight: 600;
       color: #0a0a1a;
     }
 
     .project-desc {
-      font-size: 9px;
+      font-size: 8px;
       color: #555;
-      margin-top: 2px;
-      line-height: 1.45;
+      margin-top: 1px;
+      line-height: 1.4;
     }
 
     .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
-      margin-top: 4px;
+      gap: 2px;
+      margin-top: 3px;
     }
 
     .tag {
-      font-size: 7.5px;
-      padding: 1px 5px;
+      font-size: 7px;
+      padding: 1px 4px;
       background: #e8f5ee;
       color: #00884d;
       border-radius: 2px;
       font-weight: 500;
     }
 
-    /* ═══ SKILLS ═══ */
+    /* SKILLS */
     .skills-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
+      gap: 4px;
     }
 
     .skill-group h4 {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 600;
       color: #0a0a1a;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .skill-group p {
-      font-size: 9px;
+      font-size: 8px;
       color: #555;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
-    /* ═══ METHODOLOGY ═══ */
+    /* METHODOLOGY */
     .method-flow {
       display: flex;
       align-items: center;
       gap: 0;
       justify-content: center;
-      margin: 6px 0;
+      margin: 4px 0;
     }
 
     .method-step {
       background: #f0faf5;
       border: 1px solid #d0e8dc;
-      padding: 5px 10px;
+      padding: 3px 8px;
       border-radius: 4px;
       text-align: center;
     }
 
     .method-step-name {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 600;
       color: #00884d;
     }
 
     .method-step-desc {
-      font-size: 7.5px;
+      font-size: 7px;
       color: #777;
     }
 
     .method-arrow {
       color: #00cc6e;
-      font-size: 14px;
-      padding: 0 4px;
+      font-size: 12px;
+      padding: 0 3px;
     }
 
-    /* ═══ TWO COLUMNS ═══ */
+    /* TWO COLUMNS */
     .two-cols {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* ═══ CERTIFICATIONS ═══ */
+    /* CERTIFICATIONS */
     .cert-list {
-      font-size: 10px;
+      font-size: 9px;
       color: #444;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .cert-list li {
@@ -265,17 +266,17 @@
     }
 
     .cert-list li::before {
-      content: "✓ ";
+      content: "\2713 ";
       color: #00cc6e;
       font-weight: 700;
     }
 
-    /* ═══ LANGUAGES ═══ */
+    /* LANGUAGES */
     .lang-item {
       display: flex;
       justify-content: space-between;
-      font-size: 10px;
-      padding: 2px 0;
+      font-size: 9px;
+      padding: 1px 0;
     }
 
     .lang-level {
@@ -283,12 +284,12 @@
       font-weight: 500;
     }
 
-    /* ═══ INFRA STATS ═══ */
+    /* INFRA STATS */
     .infra-stats {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .infra-stat {
@@ -296,36 +297,36 @@
     }
 
     .infra-stat .num {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       color: #00995a;
       line-height: 1;
     }
 
     .infra-stat .label {
-      font-size: 7.5px;
+      font-size: 7px;
       color: #888;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    /* ═══ FOOTER ═══ */
+    /* FOOTER */
     .footer {
       position: absolute;
-      bottom: 16px;
-      left: 32px;
-      right: 32px;
+      bottom: 12px;
+      left: 28px;
+      right: 28px;
       text-align: center;
-      font-size: 8px;
+      font-size: 7.5px;
       color: #aaa;
       border-top: 1px solid #eee;
-      padding-top: 6px;
+      padding-top: 4px;
     }
 
-    /* ═══ PRINT ═══ */
+    /* PRINT */
     @media print {
       body { background: white; }
-      .page { width: 100%; padding: 20px 24px 16px; }
+      .page { width: 100%; padding: 18px 22px 14px; }
     }
   </style>
 </head>
@@ -336,15 +337,15 @@
     <div class="header">
       <div class="header-left">
         <h1>Carlos De La Torre</h1>
-        <div class="title">IA Orquestador — Arquitecto de Infraestructura e IA</div>
-        <div class="subtitle">Socio en HUYGHU & ASOCIADOS, S.R.L. (Grupo CHRYTSA) — Disponible remoto para empresas espa&ntilde;olas</div>
+        <div class="title">IA Orquestador &mdash; Arquitecto de Infraestructura e IA</div>
+        <div class="subtitle">Socio en HUYGHU &amp; ASOCIADOS, S.R.L. (Grupo CHRYTSA) &mdash; Disponible remoto para empresas espa&ntilde;olas</div>
       </div>
       <div class="header-right">
-        <strong style="color:#0a0a1a; font-size:10.5px;">&#127466;&#127480; Nacionalidad Espa&ntilde;ola — DNI 46842516-A</strong><br>
+        <div class="nationality-badge">&#127466;&#127480; NACIONALIDAD ESPA&Ntilde;OLA &mdash; DNI 46842516-A</div><br>
         radelqui@gmail.com<br>
         +1 809 424 0731<br>
         <a href="https://app.huyghusrl.com/ai-portfolio/">app.huyghusrl.com/ai-portfolio</a><br>
-        Puerto Plata, Rep. Dominicana (remoto para Espa&ntilde;a)
+        Puerto Plata, Rep. Dominicana
       </div>
     </div>
 
@@ -360,7 +361,7 @@
       </div>
     </div>
 
-    <!-- METODOLOGÍA -->
+    <!-- METODOLOG&Iacute;A -->
     <div class="section">
       <div class="section-title">Metodolog&iacute;a de Orquestaci&oacute;n</div>
       <div class="method-flow">
@@ -396,12 +397,11 @@
       <div class="section-title">Proyectos en Producci&oacute;n</div>
       <div class="projects-grid">
         <div class="project">
-          <div class="project-name">FacturaIA — App M&oacute;vil Escaneo Inteligente</div>
+          <div class="project-name">FacturaIA &mdash; App M&oacute;vil Escaneo Inteligente</div>
           <div class="project-desc">
             App Android e iOS (React Native + Expo 52) que escanea facturas f&iacute;sicas
-            y extrae autom&aacute;ticamente 20+ campos fiscales DGII usando Claude Opus 4.5 (Vision Mode).
-            Detecta NCF, RNC, ITBIS, ISC, ISR, CDT y forma de pago. Backend OCR en Go v2.14.
-            Almacenamiento MinIO. Validaci&oacute;n contra 9+ reglas fiscales dominicanas.
+            y extrae 20+ campos fiscales DGII con Claude Opus 4.5 (Vision Mode).
+            Backend OCR en Go v2.14. Validaci&oacute;n contra 9+ reglas fiscales.
             Genera formatos 606, 607, IT-1 v&iacute;a n8n.
           </div>
           <div class="project-tags">
@@ -413,13 +413,12 @@
           </div>
         </div>
         <div class="project">
-          <div class="project-name">GestoriaRD — SaaS Multi-tenant Fiscal</div>
+          <div class="project-name">GestoriaRD &mdash; SaaS Multi-tenant Fiscal</div>
           <div class="project-desc">
-            Plataforma completa de gesti&oacute;n fiscal para firmas contables dominicanas.
-            314 clientes, 34K+ tareas fiscales, 233 credenciales DGII gestionadas.
-            Scraping de portales DGII/TSS (deudas, declaraciones IT-1, IR-2, IR-3).
-            Chat IA tributario con Groq LLaMA 3.1 70B. Oficina Virtual Fiscal.
-            28+ endpoints API. CI/CD: git push &rarr; deploy autom&aacute;tico &lt;4 min.
+            Gesti&oacute;n fiscal para firmas contables dominicanas.
+            314 clientes, 34K+ tareas fiscales, 233 credenciales DGII.
+            Scraping portales DGII/TSS. Chat IA con Groq LLaMA 3.1 70B.
+            28+ endpoints API. CI/CD: git push &rarr; deploy &lt;4 min.
           </div>
           <div class="project-tags">
             <span class="tag">Next.js 15</span>
@@ -430,7 +429,7 @@
           </div>
         </div>
         <div class="project">
-          <div class="project-name">IATRADER — Trading Automatizado 24/7</div>
+          <div class="project-name">IATRADER &mdash; Trading Automatizado 24/7</div>
           <div class="project-desc">
             2 MetaTrader 5 v&iacute;a Wine en Linux. Motor Visionario Fractal con Gemini AI.
             Pool de 8 API keys. 109+ scripts Python de an&aacute;lisis t&eacute;cnico.
@@ -443,7 +442,7 @@
           </div>
         </div>
         <div class="project">
-          <div class="project-name">Casino QR — Tickets Inteligentes</div>
+          <div class="project-name">Casino QR &mdash; Tickets Inteligentes</div>
           <div class="project-desc">
             PWA para tablets. QR encriptados con validaci&oacute;n en tiempo real.
             Multi-moneda USD/DOP. Reportes por turno/operador.
@@ -471,7 +470,7 @@
         <div class="infra-stat"><div class="num">109+</div><div class="label">Scripts Python</div></div>
         <div class="infra-stat"><div class="num">31</div><div class="label">Agentes IA</div></div>
       </div>
-      <div class="exp-desc" style="margin-top:6px;">
+      <div class="exp-desc" style="margin-top:4px;">
         VPS Contabo: Ubuntu 24.04, Coolify, Traefik SSL, Supabase, Fail2ban, ClamAV, rkhunter.
         CLIProxyAPI: proxy multi-proveedor IA (Claude, Gemini, GPT, Perplexity).
       </div>
@@ -480,73 +479,82 @@
     <!-- EXPERIENCIA + SKILLS -->
     <div class="two-cols">
       <div>
-        <!-- EXPERIENCIA PREVIA -->
+        <!-- EXPERIENCIA LABORAL -->
         <div class="section">
-          <div class="section-title">Experiencia Anterior</div>
+          <div class="section-title">Experiencia Laboral</div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">Socio — Implementaci&oacute;n de IA</span>
-              <span class="exp-date">Ene 2024 — Actual</span>
+              <span class="exp-role">Socio &mdash; Implementaci&oacute;n de IA</span>
+              <span class="exp-date">Dic 2023 &mdash; Actual</span>
             </div>
-            <div class="exp-company">HUYGHU & ASOCIADOS / Grupo CHRYTSA</div>
+            <div class="exp-company">HUYGHU &amp; ASOCIADOS / Grupo CHRYTSA</div>
             <div class="exp-desc">Orquestaci&oacute;n de 30 agentes IA en paralelo. 5 productos en producci&oacute;n. Ingenier&iacute;a de prompt avanzada con Claude, Gemini, GPT.</div>
           </div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">Propietario / Empresario</span>
-              <span class="exp-date">2018 — 2023</span>
+              <span class="exp-role">Propietario &mdash; Tecnolog&iacute;a y Distribuci&oacute;n de Software</span>
+              <span class="exp-date">May 2018 &mdash; Actual</span>
             </div>
-            <div class="exp-company">Repackager Express &amp; 4444</div>
-            <div class="exp-desc">Gesti&oacute;n integral de empresas propias. Administraci&oacute;n, operaciones, log&iacute;stica y tecnolog&iacute;a. Experiencia directa en direcci&oacute;n empresarial y toma de decisiones.</div>
+            <div class="exp-company">Repackager Express (Espa&ntilde;a) &amp; 4444 (Rep. Dominicana)</div>
+            <div class="exp-desc">Miembros TAP Microsoft en repaquetizaci&oacute;n MSIX. Distribuci&oacute;n de software open source v&iacute;a Microsoft Store: 300.000 usuarios alcanzados. Proyectos con Bancos Espa&ntilde;oles. Direcci&oacute;n con 6-10 personas a cargo.</div>
           </div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">Administrador de Sistemas</span>
-              <span class="exp-date">2013 — 2018</span>
+              <span class="exp-role">Arquitecto en Paquetizaci&oacute;n y Virtualizaci&oacute;n</span>
+              <span class="exp-date">Abr 2013 &mdash; Abr 2018</span>
             </div>
             <div class="exp-company">Unisys</div>
-            <div class="exp-desc">Infraestructura enterprise, Windows Server, Active Directory, SCCM.</div>
+            <div class="exp-desc">Virtualizaci&oacute;n de aplicaciones (Thinapp, AppV5, Citrix, Appvolume). Distribuci&oacute;n v&iacute;a SCCM 2012. Paquetizaci&oacute;n con AdminStudio 2013. Scripting VBS/PowerShell.</div>
           </div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">T&eacute;cnico de Sistemas</span>
-              <span class="exp-date">2011 — 2013</span>
+              <span class="exp-role">Consultor Paquetizaci&oacute;n Software</span>
+              <span class="exp-date">Dic 2011 &mdash; Abr 2013</span>
             </div>
-            <div class="exp-company">Grupo Santander / Alba Technology</div>
-            <div class="exp-desc">Soporte enterprise banca, infraestructura cr&iacute;tica.</div>
+            <div class="exp-company">Grupo Santander (Alba Technology)</div>
+            <div class="exp-desc">Migraci&oacute;n de 3.000 programas a Windows 7/8. Ingenier&iacute;a inversa, VBScript, Xenapp 6, AppV, SCCM.</div>
           </div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">Operador de Sistemas</span>
-              <span class="exp-date">2006 — 2009</span>
+              <span class="exp-role">Infraestructura de Red</span>
+              <span class="exp-date">Ago 2010 &mdash; Ene 2011</span>
             </div>
-            <div class="exp-company">Osiatis / DaimlerChrysler</div>
-            <div class="exp-desc">Operaciones datacenter, monitorizaci&oacute;n 24/7.</div>
+            <div class="exp-company">RNE (Radio Nacional de Espa&ntilde;a)</div>
+            <div class="exp-desc">Servidores, redes y bases de datos para nuevo software de gesti&oacute;n radiof&oacute;nico. Citrix, App_V, AdminStudio.</div>
           </div>
 
           <div class="exp-item">
             <div class="exp-header">
-              <span class="exp-role">Soporte de Infraestructura</span>
-              <span class="exp-date">2003 — 2006</span>
+              <span class="exp-role">T&eacute;cnico Lab. Inform&aacute;tico (Analista S.O.)</span>
+              <span class="exp-date">Nov 2006 &mdash; Nov 2009</span>
             </div>
-            <div class="exp-company">COS Repsol</div>
-            <div class="exp-desc">Infraestructura de red, soporte enterprise energ&iacute;a.</div>
+            <div class="exp-company">Osiatis (DaimlerChrysler, Espa&ntilde;a)</div>
+            <div class="exp-desc">Gesti&oacute;n de 850 paquetes software. Wise Package Studio, AdminStudio. Seguridad, parcheo, Cisco. ITIL, ARS Remedy.</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">T&eacute;cnico Centro Estaciones de Servicios</span>
+              <span class="exp-date">Abr 2003 &mdash; Nov 2006</span>
+            </div>
+            <div class="exp-company">COS (Repsol YPF)</div>
+            <div class="exp-desc">Responsable incidencias para 1.200 operadores telef&oacute;nicos (Solred, Autoclub). Soporte hardware/software enterprise.</div>
           </div>
         </div>
       </div>
 
       <div>
-        <!-- STACK TÉCNICO -->
+        <!-- STACK T&Eacute;CNICO -->
         <div class="section">
           <div class="section-title">Stack T&eacute;cnico</div>
           <div class="skills-grid" style="grid-template-columns: 1fr 1fr;">
             <div class="skill-group">
-              <h4>IA & Modelos</h4>
+              <h4>IA &amp; Modelos</h4>
               <p>Claude (Opus, Sonnet, Haiku), Gemini, GPT-4, Perplexity, Prompt Engineering</p>
             </div>
             <div class="skill-group">
@@ -554,11 +562,11 @@
               <p>Claude-Flow v2.7, GSD Workflow, Taskmaster, Ralph, MCP Servers</p>
             </div>
             <div class="skill-group">
-              <h4>Backend & DB</h4>
-              <p>Python, Node.js, Next.js 15, PostgreSQL, Supabase, REST APIs</p>
+              <h4>Backend &amp; DB</h4>
+              <p>Python, Node.js, Go, Next.js 15, PostgreSQL, Supabase, REST APIs</p>
             </div>
             <div class="skill-group">
-              <h4>DevOps & Cloud</h4>
+              <h4>DevOps &amp; Cloud</h4>
               <p>Docker, Linux, Coolify, Traefik, CI/CD, GitHub Actions, SSH</p>
             </div>
             <div class="skill-group">
@@ -566,7 +574,7 @@
               <p>AppArmor, Fail2ban, UFW, ClamAV, rkhunter, ModSecurity</p>
             </div>
             <div class="skill-group">
-              <h4>Frontend & Mobile</h4>
+              <h4>Frontend &amp; Mobile</h4>
               <p>React, React Native, HTML/CSS/JS, PWA, Tailwind CSS</p>
             </div>
           </div>
@@ -576,16 +584,20 @@
         <div class="section">
           <div class="section-title">Certificaciones</div>
           <ul class="cert-list">
-            <li>ITIL Foundation v3</li>
-            <li>MCTS — Microsoft Certified Technology Specialist</li>
-            <li>CCNA — Cisco Certified Network Associate</li>
+            <li>ITIL Foundation v3 (EXIN, 2015)</li>
+            <li>MCTS &mdash; SCCM 2012 (Microsoft, 2015)</li>
+            <li>Certificaci&oacute;n 70-243 SCCM 2012 (2013)</li>
+            <li>CCNA Security (ITM, 2011)</li>
+            <li>CCNA (ITM Madrid, 2011)</li>
+            <li>VMware Server 2.0 (2008)</li>
+            <li>T&eacute;cnico Telecomunicaciones Inform&aacute;ticas (2003)</li>
           </ul>
         </div>
 
-        <!-- FORMACIÓN -->
+        <!-- FORMACI&Oacute;N -->
         <div class="section">
           <div class="section-title">Formaci&oacute;n</div>
-          <div class="exp-desc">Bachillerato Profesional en Sistemas Inform&aacute;ticos</div>
+          <div class="exp-desc">FP Grado Medio en Inform&aacute;tica (1987&ndash;1989)</div>
         </div>
 
         <!-- IDIOMAS -->
@@ -598,7 +610,7 @@
     </div>
 
     <div class="footer">
-      Carlos De La Torre — IA Orquestador — app.huyghusrl.com/ai-portfolio — Febrero 2026
+      Carlos De La Torre &mdash; Nacionalidad Espa&ntilde;ola (DNI 46842516-A) &mdash; IA Orquestador &mdash; app.huyghusrl.com/ai-portfolio &mdash; Febrero 2026
     </div>
 
   </div>
