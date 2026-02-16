@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Carlos De La Torre | IA Orquestador</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: #1a1a2e;
+      background: #fff;
+      font-size: 10.5px;
+      line-height: 1.5;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 28px 32px 24px;
+      position: relative;
+    }
+
+    /* ═══ HEADER ═══ */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 14px;
+      border-bottom: 2.5px solid #00cc6e;
+      margin-bottom: 16px;
+    }
+
+    .header-left h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0a0a1a;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .header-left .title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #00995a;
+      margin-top: 3px;
+    }
+
+    .header-left .subtitle {
+      font-size: 10px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 9.5px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .header-right a {
+      color: #00995a;
+      text-decoration: none;
+    }
+
+    /* ═══ SECTIONS ═══ */
+    .section {
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #00995a;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 3px;
+      margin-bottom: 8px;
+    }
+
+    /* ═══ SUMMARY ═══ */
+    .summary {
+      font-size: 10.5px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .summary strong {
+      color: #0a0a1a;
+    }
+
+    /* ═══ EXPERIENCE ═══ */
+    .exp-item {
+      margin-bottom: 10px;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .exp-role {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0a0a1a;
+    }
+
+    .exp-date {
+      font-size: 9px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .exp-company {
+      font-size: 10px;
+      color: #00995a;
+      font-weight: 500;
+    }
+
+    .exp-desc {
+      font-size: 10px;
+      color: #444;
+      margin-top: 3px;
+      line-height: 1.55;
+    }
+
+    .exp-desc ul {
+      padding-left: 14px;
+      margin-top: 2px;
+    }
+
+    .exp-desc li {
+      margin-bottom: 1px;
+    }
+
+    /* ═══ PROJECTS ═══ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .project {
+      background: #f8faf9;
+      border: 1px solid #e8ece9;
+      border-left: 3px solid #00cc6e;
+      padding: 8px 10px;
+      border-radius: 3px;
+    }
+
+    .project-name {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #0a0a1a;
+    }
+
+    .project-desc {
+      font-size: 9px;
+      color: #555;
+      margin-top: 2px;
+      line-height: 1.45;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 7.5px;
+      padding: 1px 5px;
+      background: #e8f5ee;
+      color: #00884d;
+      border-radius: 2px;
+      font-weight: 500;
+    }
+
+    /* ═══ SKILLS ═══ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
+
+    .skill-group h4 {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #0a0a1a;
+      margin-bottom: 2px;
+    }
+
+    .skill-group p {
+      font-size: 9px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* ═══ METHODOLOGY ═══ */
+    .method-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      justify-content: center;
+      margin: 6px 0;
+    }
+
+    .method-step {
+      background: #f0faf5;
+      border: 1px solid #d0e8dc;
+      padding: 5px 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .method-step-name {
+      font-size: 9px;
+      font-weight: 600;
+      color: #00884d;
+    }
+
+    .method-step-desc {
+      font-size: 7.5px;
+      color: #777;
+    }
+
+    .method-arrow {
+      color: #00cc6e;
+      font-size: 14px;
+      padding: 0 4px;
+    }
+
+    /* ═══ TWO COLUMNS ═══ */
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ═══ CERTIFICATIONS ═══ */
+    .cert-list {
+      font-size: 10px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .cert-list li {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .cert-list li::before {
+      content: "✓ ";
+      color: #00cc6e;
+      font-weight: 700;
+    }
+
+    /* ═══ LANGUAGES ═══ */
+    .lang-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      padding: 2px 0;
+    }
+
+    .lang-level {
+      color: #00995a;
+      font-weight: 500;
+    }
+
+    /* ═══ INFRA STATS ═══ */
+    .infra-stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .infra-stat {
+      text-align: center;
+    }
+
+    .infra-stat .num {
+      font-size: 16px;
+      font-weight: 700;
+      color: #00995a;
+      line-height: 1;
+    }
+
+    .infra-stat .label {
+      font-size: 7.5px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      position: absolute;
+      bottom: 16px;
+      left: 32px;
+      right: 32px;
+      text-align: center;
+      font-size: 8px;
+      color: #aaa;
+      border-top: 1px solid #eee;
+      padding-top: 6px;
+    }
+
+    /* ═══ PRINT ═══ */
+    @media print {
+      body { background: white; }
+      .page { width: 100%; padding: 20px 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Carlos De La Torre</h1>
+        <div class="title">IA Orquestador — Arquitecto de Infraestructura e IA</div>
+        <div class="subtitle">Socio en HUYGHU & ASOCIADOS, S.R.L. (Grupo CHRYTSA)</div>
+      </div>
+      <div class="header-right">
+        radelqui@gmail.com<br>
+        +1 809 424 0731<br>
+        <a href="https://app.huyghusrl.com/ai-portfolio/">app.huyghusrl.com/ai-portfolio</a><br>
+        Puerto Plata, Rep. Dominicana
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section">
+      <div class="section-title">Perfil Profesional</div>
+      <div class="summary">
+        <strong>21+ a&ntilde;os en infraestructura tecnol&oacute;gica</strong>, los &uacute;ltimos 2+ dedicados a implementar IA en empresas.
+        Dise&ntilde;o arquitecturas donde <strong>30 agentes IA trabajan en paralelo</strong> coordinados con metodolog&iacute;as propias.
+        No programo c&oacute;digo convencional: orquesto sistemas inteligentes usando ingenier&iacute;a de prompt avanzada,
+        m&uacute;ltiples modelos (Claude, Gemini, GPT, Perplexity) y herramientas de orquestaci&oacute;n.
+        <strong>5 productos en producci&oacute;n</strong> demuestran resultados reales con m&eacute;tricas verificables.
+      </div>
+    </div>
+
+    <!-- METODOLOGÍA -->
+    <div class="section">
+      <div class="section-title">Metodolog&iacute;a de Orquestaci&oacute;n</div>
+      <div class="method-flow">
+        <div class="method-step">
+          <div class="method-step-name">TASKMASTER</div>
+          <div class="method-step-desc">17 proyectos JSON</div>
+        </div>
+        <div class="method-arrow">&rarr;</div>
+        <div class="method-step">
+          <div class="method-step-name">GSD WORKFLOW</div>
+          <div class="method-step-desc">27 comandos</div>
+        </div>
+        <div class="method-arrow">&rarr;</div>
+        <div class="method-step">
+          <div class="method-step-name">CLAUDE-FLOW</div>
+          <div class="method-step-desc">30 agentes paralelos</div>
+        </div>
+        <div class="method-arrow">&rarr;</div>
+        <div class="method-step">
+          <div class="method-step-name">RALPH</div>
+          <div class="method-step-desc">Loops aut&oacute;nomos</div>
+        </div>
+        <div class="method-arrow">&rarr;</div>
+        <div class="method-step">
+          <div class="method-step-name">DEPLOY</div>
+          <div class="method-step-desc">&lt;3 min producci&oacute;n</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="section">
+      <div class="section-title">Proyectos en Producci&oacute;n</div>
+      <div class="projects-grid">
+        <div class="project">
+          <div class="project-name">IATRADER — Trading Automatizado 24/7</div>
+          <div class="project-desc">
+            2 MetaTrader 5 via Wine en Linux. Motor Visionario Fractal con Gemini AI.
+            Pool de 8 API keys. 109+ scripts Python de an&aacute;lisis t&eacute;cnico.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Gemini AI</span>
+            <span class="tag">MetaTrader 5</span>
+            <span class="tag">pandas-ta</span>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-name">GestoriaRD — Gesti&oacute;n Contable con IA</div>
+          <div class="project-desc">
+            Next.js 15, 71 tablas PostgreSQL. Scraping TSS/DGII con Playwright + Camoufox.
+            Chat IA tributario con Perplexity. CI/CD: push &rarr; deploy &lt;3 min.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Next.js 15</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Perplexity</span>
+            <span class="tag">Playwright</span>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-name">FacturaIA — SaaS Multi-tenant</div>
+          <div class="project-desc">
+            Facturaci&oacute;n inteligente con OCR Gemini API. App Android (React Native).
+            Arquitectura: 100 firmas &times; 300 clientes.
+          </div>
+          <div class="project-tags">
+            <span class="tag">Gemini OCR</span>
+            <span class="tag">React Native</span>
+            <span class="tag">Multi-tenant</span>
+            <span class="tag">SaaS</span>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-name">Casino QR — Tickets Inteligentes</div>
+          <div class="project-desc">
+            PWA para tablets. QR encriptados con validaci&oacute;n en tiempo real.
+            Multi-moneda USD/DOP. Reportes por turno/operador.
+          </div>
+          <div class="project-tags">
+            <span class="tag">PWA</span>
+            <span class="tag">QR Crypto</span>
+            <span class="tag">Real-time</span>
+            <span class="tag">Multi-moneda</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFRAESTRUCTURA -->
+    <div class="section">
+      <div class="section-title">Infraestructura Cloud Autogestionada</div>
+      <div class="infra-stats">
+        <div class="infra-stat"><div class="num">8</div><div class="label">CPU Cores</div></div>
+        <div class="infra-stat"><div class="num">23GB</div><div class="label">RAM</div></div>
+        <div class="infra-stat"><div class="num">23</div><div class="label">Containers Docker</div></div>
+        <div class="infra-stat"><div class="num">71</div><div class="label">Tablas PostgreSQL</div></div>
+        <div class="infra-stat"><div class="num">147</div><div class="label">Perfiles AppArmor</div></div>
+        <div class="infra-stat"><div class="num">54</div><div class="label">Reglas UFW</div></div>
+        <div class="infra-stat"><div class="num">109+</div><div class="label">Scripts Python</div></div>
+        <div class="infra-stat"><div class="num">31</div><div class="label">Agentes IA</div></div>
+      </div>
+      <div class="exp-desc" style="margin-top:6px;">
+        VPS Contabo: Ubuntu 24.04, Coolify, Traefik SSL, Supabase, Fail2ban, ClamAV, rkhunter.
+        CLIProxyAPI: proxy multi-proveedor IA (Claude, Gemini, GPT, Perplexity).
+      </div>
+    </div>
+
+    <!-- EXPERIENCIA + SKILLS -->
+    <div class="two-cols">
+      <div>
+        <!-- EXPERIENCIA PREVIA -->
+        <div class="section">
+          <div class="section-title">Experiencia Anterior</div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Socio — Implementaci&oacute;n de IA</span>
+              <span class="exp-date">Ene 2024 — Actual</span>
+            </div>
+            <div class="exp-company">HUYGHU & ASOCIADOS / Grupo CHRYTSA</div>
+            <div class="exp-desc">Orquestaci&oacute;n de 30 agentes IA en paralelo. 5 productos en producci&oacute;n. Ingenier&iacute;a de prompt avanzada con Claude, Gemini, GPT.</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Administrador de Sistemas</span>
+              <span class="exp-date">2013 — 2018</span>
+            </div>
+            <div class="exp-company">Unisys</div>
+            <div class="exp-desc">Infraestructura enterprise, Windows Server, Active Directory, SCCM.</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">T&eacute;cnico de Sistemas</span>
+              <span class="exp-date">2011 — 2013</span>
+            </div>
+            <div class="exp-company">Grupo Santander / Alba Technology</div>
+            <div class="exp-desc">Soporte enterprise banca, infraestructura cr&iacute;tica.</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Operador de Sistemas</span>
+              <span class="exp-date">2006 — 2009</span>
+            </div>
+            <div class="exp-company">Osiatis / DaimlerChrysler</div>
+            <div class="exp-desc">Operaciones datacenter, monitorizaci&oacute;n 24/7.</div>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-role">Soporte de Infraestructura</span>
+              <span class="exp-date">2003 — 2006</span>
+            </div>
+            <div class="exp-company">COS Repsol</div>
+            <div class="exp-desc">Infraestructura de red, soporte enterprise energ&iacute;a.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- STACK TÉCNICO -->
+        <div class="section">
+          <div class="section-title">Stack T&eacute;cnico</div>
+          <div class="skills-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="skill-group">
+              <h4>IA & Modelos</h4>
+              <p>Claude (Opus, Sonnet, Haiku), Gemini, GPT-4, Perplexity, Prompt Engineering</p>
+            </div>
+            <div class="skill-group">
+              <h4>Orquestaci&oacute;n</h4>
+              <p>Claude-Flow v2.7, GSD Workflow, Taskmaster, Ralph, MCP Servers</p>
+            </div>
+            <div class="skill-group">
+              <h4>Backend & DB</h4>
+              <p>Python, Node.js, Next.js 15, PostgreSQL, Supabase, REST APIs</p>
+            </div>
+            <div class="skill-group">
+              <h4>DevOps & Cloud</h4>
+              <p>Docker, Linux, Coolify, Traefik, CI/CD, GitHub Actions, SSH</p>
+            </div>
+            <div class="skill-group">
+              <h4>Seguridad</h4>
+              <p>AppArmor, Fail2ban, UFW, ClamAV, rkhunter, ModSecurity</p>
+            </div>
+            <div class="skill-group">
+              <h4>Frontend & Mobile</h4>
+              <p>React, React Native, HTML/CSS/JS, PWA, Tailwind CSS</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CERTIFICACIONES -->
+        <div class="section">
+          <div class="section-title">Certificaciones</div>
+          <ul class="cert-list">
+            <li>ITIL Foundation v3</li>
+            <li>MCTS — Microsoft Certified Technology Specialist</li>
+            <li>CCNA — Cisco Certified Network Associate</li>
+          </ul>
+        </div>
+
+        <!-- FORMACIÓN -->
+        <div class="section">
+          <div class="section-title">Formaci&oacute;n</div>
+          <div class="exp-desc">Bachillerato Profesional en Sistemas Inform&aacute;ticos</div>
+        </div>
+
+        <!-- IDIOMAS -->
+        <div class="section">
+          <div class="section-title">Idiomas</div>
+          <div class="lang-item"><span>Espa&ntilde;ol</span><span class="lang-level">Nativo</span></div>
+          <div class="lang-item"><span>Ingl&eacute;s</span><span class="lang-level">Avanzado</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Carlos De La Torre — IA Orquestador — app.huyghusrl.com/ai-portfolio — Febrero 2026
+    </div>
+
+  </div>
+</body>
+</html>
