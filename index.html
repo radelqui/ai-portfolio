@@ -69,6 +69,52 @@
       z-index: 1;
     }
 
+    /* ═══ PROFILE VIDEO ═══ */
+    .profile-video-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--green);
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+      margin-bottom: 1.5rem;
+      flex-shrink: 0;
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+
+    .profile-video-container video,
+    .profile-video-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-video-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, transparent 50%, rgba(0, 180, 255, 0.1) 100%);
+      pointer-events: none;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3), 0 0 60px rgba(0, 255, 136, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.5), 0 0 80px rgba(0, 255, 136, 0.2);
+      }
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
     /* ═══ HERO ═══ */
     .hero {
       min-height: 100vh;
@@ -695,6 +741,16 @@
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
+      .hero-top-row {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile-video-container {
+        width: 140px;
+        height: 140px;
+      }
+
       .hero-stats {
         gap: 1.5rem;
       }
@@ -730,12 +786,20 @@
         <span style="margin-left:auto; color:var(--green)">31 agents active</span>
       </div>
 
-      <h1 class="hero-title">
-        <span class="line1">Carlos De La</span><br>
-        <span class="line2">Torre</span><br>
-        <span class="line1" style="font-size:0.45em; font-weight:400; color:var(--text-mid);">IA Orquestador</span><br>
-        <span class="line3">// hago que la IA trabaje por ti</span>
-      </h1>
+      <div class="hero-top-row">
+        <div class="profile-video-container">
+          <video autoplay loop muted playsinline poster="carlos-ai-profile.gif">
+            <source src="carlos-ai-profile.mp4" type="video/mp4">
+            <img src="carlos-ai-profile.gif" alt="Carlos De La Torre — AI Profile">
+          </video>
+        </div>
+        <h1 class="hero-title">
+          <span class="line1">Carlos De La</span><br>
+          <span class="line2">Torre</span><br>
+          <span class="line1" style="font-size:0.45em; font-weight:400; color:var(--text-mid);">IA Orquestador</span><br>
+          <span class="line3">// hago que la IA trabaje por ti</span>
+        </h1>
+      </div>
 
       <p class="hero-sub">
         No programo código — <strong>diseño arquitecturas donde 30 agentes IA trabajan en paralelo</strong>.
