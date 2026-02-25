@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos De La Torre — AI Orchestrator Video</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Carlos De La Torre — AI Orchestrator. 6 agentes en paralelo crearon este video en 2 horas. 5 productos, 314 clientes, 34K tareas automatizadas.">
+  <meta name="author" content="Carlos De La Torre">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="video.other">
+  <meta property="og:url" content="https://app.huyghusrl.com/video">
+  <meta property="og:title" content="Carlos De La Torre — AI Orchestrator">
+  <meta property="og:description" content="Este video fue creado por 6 agentes en paralelo. En 2 horas.">
+  <meta property="og:image" content="https://app.huyghusrl.com/ai-portfolio/og-preview.png">
+  <meta property="og:locale" content="es_ES">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #0a0a0f;
+      --bg-panel: #0d0d14;
+      --bg-card: #12121c;
+      --border: #1a1a2e;
+      --border-glow: #00ff8820;
+      --green: #00ff88;
+      --green-dim: #00ff8840;
+      --green-dark: #00ff8815;
+      --blue: #00b4ff;
+      --blue-dim: #00b4ff40;
+      --purple: #a855f7;
+      --amber: #ffb800;
+      --text: #e0e0e8;
+      --text-dim: #6a6a80;
+      --text-mid: #9090a8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scanlines effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 136, 0.015) 2px,
+        rgba(0, 255, 136, 0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Ambient glow */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 255, 136, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ═══ HEADER ═══ */
+    .header {
+      padding: 2rem 2rem 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: color 0.3s;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: var(--green);
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--green); }
+      50%       { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-title .name {
+      color: var(--text);
+    }
+
+    .page-title .role {
+      color: var(--blue);
+      text-shadow: 0 0 30px rgba(0, 180, 255, 0.3);
+    }
+
+    .page-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-mid);
+      margin-top: 0.5rem;
+      font-weight: 300;
+    }
+
+    /* ═══ VIDEO SECTION ═══ */
+    .video-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 2rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px var(--border),
+        0 0 60px rgba(0, 255, 136, 0.05),
+        0 20px 80px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.4s;
+    }
+
+    .video-wrapper:hover {
+      box-shadow:
+        0 0 0 1px var(--green-dim),
+        0 0 80px rgba(0, 255, 136, 0.1),
+        0 20px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.7rem;
+    }
+
+    .video-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .video-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .video-dots span:nth-child(1) { background: #ff5f57; }
+    .video-dots span:nth-child(2) { background: #febc2e; }
+    .video-dots span:nth-child(3) { background: #28c840; }
+
+    .video-bar-title {
+      color: var(--text-dim);
+      flex: 1;
+      text-align: center;
+    }
+
+    .video-bar-badge {
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: rgba(0, 180, 255, 0.12);
+      color: var(--blue);
+      border: 1px solid var(--blue-dim);
+    }
+
+    .video-player {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    /* ═══ STATS ═══ */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+      min-height: 40px;
+    }
+
+    /* ═══ META NOTE ═══ */
+    .meta-note {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .meta-note .highlight {
+      color: var(--blue);
+      font-style: normal;
+    }
+
+    /* ═══ CONTACT ═══ */
+    .contact-section {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .contact-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .contact-heading span {
+      color: var(--green);
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      border-color: var(--green-dim);
+      background: var(--green-dark);
+      color: var(--green);
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--bg-deep);
+      border-color: var(--green);
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #00cc6e;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+      color: var(--bg-deep);
+    }
+
+    .btn-whatsapp {
+      background: rgba(37, 211, 102, 0.1);
+      border-color: rgba(37, 211, 102, 0.3);
+      color: #25d366;
+    }
+
+    .btn-whatsapp:hover {
+      background: rgba(37, 211, 102, 0.2);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.2);
+      color: #25d366;
+    }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .stats-row {
+        gap: 1.5rem;
+      }
+
+      .stat-divider {
+        display: none;
+      }
+
+      .stat-value {
+        font-size: 1.6rem;
+      }
+
+      .contact-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="../" class="back-link">← Volver al portfolio</a>
+
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      <span>6 AGENTES ACTIVOS</span>
+      <span style="margin-left:auto; color:var(--blue)">2h de ejecución</span>
+    </div>
+
+    <h1 class="page-title">
+      <span class="name">Carlos De La Torre</span><br>
+      <span class="role">AI Orchestrator</span>
+    </h1>
+    <p class="page-subtitle">// esto es lo que pasa cuando la IA trabaja de verdad</p>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-section">
+
+    <div class="video-wrapper">
+      <div class="video-bar">
+        <div class="video-dots"><span></span><span></span><span></span></div>
+        <span class="video-bar-title">linkedin-v3-final.mp4</span>
+        <span class="video-bar-badge">● AI GENERATED</span>
+      </div>
+      <video
+        class="video-player"
+        controls
+        preload="metadata"
+        poster="../og-preview.png"
+      >
+        <source src="../linkedin-v3-final.mp4" type="video/mp4">
+        Tu navegador no soporta video HTML5.
+      </video>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-value">5</div>
+        <div class="stat-label">Productos</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">314</div>
+        <div class="stat-label">Clientes</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">34K</div>
+        <div class="stat-label">Tareas automatizadas</div>
+      </div>
+    </div>
+
+    <!-- META NOTE -->
+    <p class="meta-note">
+      Este video fue creado por <span class="highlight">6 agentes en paralelo</span>. En 2 horas.
+    </p>
+
+    <!-- CONTACT -->
+    <div class="contact-section">
+      <p class="contact-heading">
+        ¿Quieres que la IA trabaje<br><span>para tu empresa?</span>
+      </p>
+      <div class="contact-buttons">
+        <a href="mailto:radelqui@gmail.com" class="btn btn-primary">
+          ✉ Escríbeme
+        </a>
+        <a href="https://wa.me/18094240731" target="_blank" class="btn btn-whatsapp">
+          📱 WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span style="color:var(--green)">▸</span> © 2026 Carlos De La Torre — HUYGHU & ASOCIADOS
+    <br>
+    <span style="color:var(--text-dim); font-size:0.6rem;">
+      Orquestado con Claude. Porque así es como trabajo.
+    </span>
+  </footer>
+
+</body>
+</html>
