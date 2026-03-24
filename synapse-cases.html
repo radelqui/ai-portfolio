@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYNAPSE Use Cases — 50 Industries, Real AI Orchestration Problems</title>
+
+  <meta name="description" content="50 real use cases where SYNAPSE multi-agent AI orchestration transforms businesses. Choose your industry and see how coordinated AI agents solve your problems.">
+  <meta name="keywords" content="SYNAPSE, AI orchestration, multi-agent, use cases, industries, AI solutions, Carlos De La Torre">
+  <meta name="author" content="Carlos De La Torre">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SYNAPSE Use Cases — What can AI orchestration do for YOUR industry?">
+  <meta property="og:description" content="50 real use cases where multi-agent AI orchestration transforms businesses.">
+  <meta property="og:url" content="https://app.huyghusrl.com/ai-portfolio/synapse-cases.html">
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #ffffff;
+      --bg-panel: #f8f8fa;
+      --bg-card: #ffffff;
+      --border: #e8e8ee;
+      --border-glow: #da775620;
+      --green: #059669;
+      --green-dim: #05966940;
+      --green-dark: #05966912;
+      --blue: #2563eb;
+      --blue-dim: #2563eb30;
+      --orange: #da7756;
+      --orange-dim: #da775640;
+      --orange-dark: #da775612;
+      --orange-glow: #da775620;
+      --text: #1a1a1a;
+      --text-dim: #888888;
+      --text-mid: #555555;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.003) 2px,
+        rgba(0,0,0,0.003) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-family: 'JetBrains Mono', monospace;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--orange); }
+
+    /* HERO */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 9rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(218,119,86,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(218,119,86,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fff4f0;
+      border: 1px solid var(--orange-dim);
+      color: var(--orange);
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--orange-dim); }
+      50% { opacity: 0.4; box-shadow: none; }
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 .accent { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-hint {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--orange);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      color: #fff;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.85;
+    }
+
+    /* SEARCH + FILTER */
+    .controls {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem 1.5rem;
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--bg-panel);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .filter-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-tag {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      color: var(--text-dim);
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .filter-tag:hover, .filter-tag.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    /* INDUSTRIES GRID */
+    .industries-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem 6rem;
+    }
+
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    /* INDUSTRY CARD */
+    .industry-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--bg-card);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .industry-card.visible {
+      animation: fadeUp 0.4s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .industry-card.hidden {
+      display: none;
+    }
+
+    .industry-header {
+      padding: 1.25rem 1.25rem 1rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      transition: background 0.15s;
+    }
+
+    .industry-header:hover {
+      background: #fafafa;
+    }
+
+    .industry-card.open .industry-header {
+      background: #fff4f0;
+      border-bottom: 1px solid var(--orange-dim);
+    }
+
+    .industry-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .industry-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .industry-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .industry-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .industry-chevron {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .industry-card.open .industry-chevron {
+      transform: rotate(90deg);
+      color: var(--orange);
+    }
+
+    /* CASES PANEL */
+    .cases-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .industry-card.open .cases-panel {
+      max-height: 3000px;
+    }
+
+    .case-item {
+      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .case-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--orange);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .case-item:hover::before {
+      opacity: 1;
+    }
+
+    .case-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .case-section {
+      margin-bottom: 0.75rem;
+    }
+
+    .case-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+      margin-bottom: 0.3rem;
+    }
+
+    .case-section-text {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    .case-profit {
+      background: var(--green-dark);
+      border: 1px solid var(--green-dim);
+      border-radius: 3px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--green);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    /* MINI DIAGRAM */
+    .mini-diagram {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      overflow-x: auto;
+    }
+
+    .diagram-flow {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      min-width: min-content;
+    }
+
+    .d-node {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .d-node.sm {
+      background: var(--orange-dark);
+      border: 1px solid var(--orange-dim);
+      color: var(--orange);
+    }
+
+    .d-node.arch {
+      background: var(--blue-dim);
+      border: 1px solid var(--blue);
+      color: var(--blue);
+    }
+
+    .d-node.agent {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+    }
+
+    .d-arrow {
+      color: var(--text-dim);
+      font-size: 0.65rem;
+    }
+
+    .case-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      text-decoration: none;
+      border-bottom: 1px solid var(--orange-dim);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+
+    .case-link:hover {
+      border-color: var(--orange);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--orange); }
+
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      opacity: 0.6;
+    }
+
+    /* NO RESULTS */
+    .no-results {
+      text-align: center;
+      padding: 4rem 2rem;
+      display: none;
+    }
+
+    .no-results.visible { display: block; }
+
+    .no-results h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .no-results p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* SECTION DIVIDER */
+    .divider {
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--orange-dim), transparent);
+    }
+
+    .divider-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .industries-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .industries-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { gap: 1.5rem; }
+      nav { padding: 0.75rem 1rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-links a { font-size: 0.6rem; }
+    }
+
+    @media (max-width: 480px) {
+      .industries-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.8rem; }
+      .filter-tags { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="synapse.html">SYNAPSE</a>
+  <ul class="nav-links">
+    <li><a href="synapse.html">Methodology</a></li>
+    <li><a href="synapse-cases.html" style="color:var(--orange)">Use Cases</a></li>
+    <li><a href="carlos_ai_portfolio.html">Portfolio</a></li>
+    <li><a href="mailto:radelqui@gmail.com">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      50 real-world use cases
+    </div>
+    <h1>What can SYNAPSE do for<br><span class="accent">YOUR industry?</span></h1>
+    <p class="hero-sub">50 real use cases where multi-agent AI orchestration transforms businesses</p>
+    <p class="hero-hint">// Click any industry to see how coordinated AI agents solve real problems</p>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">50</span>
+    <span class="stat-label">Use Cases</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">20</span>
+    <span class="stat-label">Industries</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Agents</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Methodology</span>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Search industries or use cases..." autocomplete="off">
+  </div>
+  <div class="filter-tags">
+    <button class="filter-tag active" data-filter="all">All</button>
+    <button class="filter-tag" data-filter="operations">Operations</button>
+    <button class="filter-tag" data-filter="finance">Finance</button>
+    <button class="filter-tag" data-filter="people">People</button>
+    <button class="filter-tag" data-filter="tech">Tech</button>
+    <button class="filter-tag" data-filter="services">Services</button>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-label">Choose Your Industry</span>
+  <div class="divider-line" style="background: linear-gradient(to left, var(--orange-dim), transparent);"></div>
+</div>
+
+<!-- INDUSTRIES GRID -->
+<div class="industries-section">
+  <div class="industries-grid" id="industries-grid">
+    <!-- Cards injected by JS -->
+  </div>
+  <div class="no-results" id="no-results">
+    <h3>No results found</h3>
+    <p>// Try a different keyword or filter</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Powered by SYNAPSE Methodology</div>
+  <div class="footer-name">Carlos De La Torre</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/carlosdelatorre-ai/" target="_blank">LinkedIn</a>
+    <a href="carlos_ai_portfolio.html">Portfolio</a>
+    <a href="synapse.html">SYNAPSE</a>
+    <a href="mailto:radelqui@gmail.com">radelqui@gmail.com</a>
+  </div>
+  <div class="footer-copy">© 2026 Carlos De La Torre · SYNAPSE Multi-Agent Orchestration Methodology</div>
+</footer>
+
+<script>
+  /* ═══ DATA ═══ */
+  const industries = [
+    {
+      id: "call-centers",
+      icon: "📞",
+      name: "Call Centers",
+      tags: ["services", "operations"],
+      cases: [
+        {
+          name: "End-to-End Call Center Orchestration",
+          agents: "IVR Router, Sentiment Analyzer, Knowledge Retrieval Agent, Script Generator, Quality Monitor, Follow-up Agent",
+          whatTheyDo: "IVR routes calls by intent, Sentiment Analyzer flags emotional escalation in real-time, Knowledge Retrieval surfaces relevant scripts, Quality Monitor scores every call live, Follow-up Agent dispatches post-call emails and tickets automatically.",
+          why: "Reduces average handle time by 35%, improves first-call resolution, and eliminates manual QA overhead.",
+          diagram: ["SM", "Architect", "IVR Router", "Sentiment", "Knowledge", "QA Monitor", "Follow-up"]
+        },
+        {
+          name: "Multichannel Customer Experience",
+          agents: "Voice Agent, Chat Agent, Email Agent, Social Agent, Profile Unifier, Escalation Coordinator",
+          whatTheyDo: "Each channel agent handles its medium independently, Profile Unifier merges context into a single customer record, Escalation Coordinator triggers human hand-offs when thresholds are met.",
+          why: "Unified customer profiles enable consistent, context-aware interactions across voice, chat, email, and social — without silos.",
+          diagram: ["SM", "Architect", "Voice", "Chat", "Email", "Social", "Profile Unifier"]
+        }
+      ]
+    },
+    {
+      id: "procurement",
+      icon: "📦",
+      name: "Procurement",
+      tags: ["operations", "finance"],
+      cases: [
+        {
+          name: "Multi-Supplier Sourcing",
+          agents: "Catalog Evaluator, Negotiation Agent, Risk Monitor, Compliance Checker, Quantity Optimizer",
+          whatTheyDo: "Catalog Evaluator scores supplier offers, Negotiation Agent runs automated tender rounds, Risk Monitor tracks geopolitical and financial supplier risks, Compliance Checker validates against procurement policies, Quantity Optimizer aligns orders to demand forecasts.",
+          why: "Cuts sourcing cycle from weeks to hours, reduces procurement costs 15–25%, and ensures policy compliance by design.",
+          diagram: ["SM", "Architect", "Catalog Eval", "Negotiation", "Risk Monitor", "Compliance", "Optimizer"]
+        },
+        {
+          name: "Dynamic Contracting Compliance",
+          agents: "Contract Author, Anomaly Detector, Policy Enforcer, Department Coordinator",
+          whatTheyDo: "Contract Author co-drafts agreements from templates, Anomaly Detector flags unusual clauses, Policy Enforcer cross-references internal regulations, Department Coordinator ensures all stakeholders sign off.",
+          why: "Eliminates contract bottlenecks, reduces legal review time 60%, and prevents non-compliant purchases before they happen.",
+          diagram: ["SM", "Architect", "Contract Author", "Anomaly Detect", "Policy Enforce", "Dept Coord"]
+        },
+        {
+          name: "Demand-Driven Purchasing",
+          agents: "Demand Forecaster, Inventory Planner, Supplier Coordinator, Replenishment Trigger",
+          whatTheyDo: "Demand Forecaster projects consumption, Inventory Planner calculates safety stock, Supplier Coordinator aligns lead times, Replenishment Trigger fires POs at the right moment.",
+          why: "Eliminates stockouts and overstock simultaneously. Inventory costs drop while service levels increase.",
+          diagram: ["SM", "Architect", "Demand Forecast", "Inventory Plan", "Supplier Coord", "Replenishment"]
+        }
+      ]
+    },
+    {
+      id: "logistics",
+      icon: "🚛",
+      name: "Logistics",
+      tags: ["operations"],
+      cases: [
+        {
+          name: "Hub-to-Last-Mile Orchestration",
+          agents: "Route Planner, Load Optimizer, Carrier Comms Agent, Exception Handler, ETA Notifier",
+          whatTheyDo: "Route Planner optimizes paths dynamically, Load Optimizer maximizes vehicle utilization, Carrier Comms Agent coordinates pickups, Exception Handler reroutes around disruptions, ETA Notifier keeps customers informed.",
+          why: "Delivery costs drop 20%, on-time rates improve, and customers get proactive communication without human effort.",
+          diagram: ["SM", "Architect", "Route Planner", "Load Optimizer", "Carrier Comms", "Exception", "ETA"]
+        },
+        {
+          name: "Multimodal Network Optimization",
+          agents: "Air Agent, Sea Agent, Rail Agent, Road Agent, Customs Agent, Documentation Agent",
+          whatTheyDo: "Each modal agent manages its segment, Customs Agent pre-clears documentation, Documentation Agent generates manifests and compliance paperwork automatically.",
+          why: "Removes manual coordination across transport modes, reduces transit time and customs delays significantly.",
+          diagram: ["SM", "Architect", "Air", "Sea", "Rail", "Road", "Customs", "Docs"]
+        },
+        {
+          name: "Cold Chain Integrity",
+          agents: "Temperature Sensor Agent, Humidity Monitor, Maintenance Coordinator, Rerouting Agent, Discard Decision Agent",
+          whatTheyDo: "Sensor agents monitor conditions continuously, Maintenance Coordinator dispatches repair when thresholds are breached, Rerouting Agent finds alternate paths, Discard Decision Agent triggers write-offs when product is unsalvageable.",
+          why: "Prevents spoilage losses, ensures regulatory compliance, and provides full audit trail for product liability.",
+          diagram: ["SM", "Architect", "Temp Sensor", "Humidity", "Maintenance", "Rerouting", "Discard"]
+        }
+      ]
+    },
+    {
+      id: "finance",
+      icon: "💹",
+      name: "Finance",
+      tags: ["finance"],
+      cases: [
+        {
+          name: "Enterprise Risk and Fraud Detection",
+          agents: "Transaction Monitor, Behavioral Analyzer, Cross-Domain Risk Agent, Approval Coordinator, Alert Dispatcher",
+          whatTheyDo: "Transaction Monitor flags anomalies in real-time, Behavioral Analyzer detects pattern shifts, Cross-Domain Risk Agent correlates signals across systems, Approval Coordinator routes for human review, Alert Dispatcher notifies the right people instantly.",
+          why: "Fraud caught earlier, false positives reduced, and risk response time measured in seconds instead of hours.",
+          diagram: ["SM", "Architect", "Tx Monitor", "Behavioral", "Cross-Domain", "Approval", "Alert"]
+        },
+        {
+          name: "Automated Regulatory Reporting",
+          agents: "Data Lineage Agent, Reconciliation Agent, Report Generator, Compliance Checker, Submission Agent",
+          whatTheyDo: "Data Lineage Agent traces every number to its source, Reconciliation Agent validates cross-system consistency, Report Generator assembles regulatory filings, Compliance Checker validates format and rules, Submission Agent files directly with regulators.",
+          why: "Eliminates manual reporting errors, cuts preparation time from days to hours, and creates defensible audit trails.",
+          diagram: ["SM", "Architect", "Data Lineage", "Reconciliation", "Report Gen", "Compliance", "Submission"]
+        },
+        {
+          name: "Portfolio Rebalancing",
+          agents: "Asset Manager Agent, Liability Manager, Risk Analyst, Compliance Agent, Position Coordinator",
+          whatTheyDo: "Asset and Liability agents update positions continuously, Risk Analyst evaluates portfolio stress scenarios, Compliance Agent enforces investment mandates, Position Coordinator executes rebalancing decisions.",
+          why: "Continuously optimal portfolios without manual intervention. Mandate drift eliminated, regulatory risk minimized.",
+          diagram: ["SM", "Architect", "Asset Mgr", "Liability Mgr", "Risk Analyst", "Compliance", "Position"]
+        }
+      ]
+    },
+    {
+      id: "legal",
+      icon: "⚖️",
+      name: "Legal",
+      tags: ["services"],
+      cases: [
+        {
+          name: "Enterprise Legal Compliance",
+          agents: "Policy Interpreter, Contract Reviewer, IP Tracker, Litigation Risk Agent, Policy Coordinator",
+          whatTheyDo: "Policy Interpreter translates regulations into internal rules, Contract Reviewer scans all agreements, IP Tracker monitors patent portfolios, Litigation Risk Agent scores exposure, Policy Coordinator updates the compliance library.",
+          why: "Proactive compliance prevents costly violations. Legal team focuses on strategic work instead of document review.",
+          diagram: ["SM", "Architect", "Policy Interp", "Contract Rev", "IP Tracker", "Litigation Risk"]
+        },
+        {
+          name: "M&A Due Diligence",
+          agents: "Document Collector, Risk Flagger, Team Coordinator, Data Room Agent, Harmonization Agent",
+          whatTheyDo: "Document Collector ingests thousands of files, Risk Flagger surfaces red flags with citations, Team Coordinator assigns findings to specialist reviewers, Data Room Agent manages access and versioning, Harmonization Agent reconciles conflicting data.",
+          why: "Due diligence that took 6 weeks compressed to days. Critical risks surface faster, deals close with confidence.",
+          diagram: ["SM", "Architect", "Doc Collector", "Risk Flagger", "Team Coord", "Data Room", "Harmonize"]
+        },
+        {
+          name: "IP Portfolio Management",
+          agents: "Filing Tracker, Renewal Agent, Licensing Monitor, Litigation Risk Agent, Infringement Scanner",
+          whatTheyDo: "Filing Tracker monitors global patent deadlines, Renewal Agent automates fee payments, Licensing Monitor tracks royalty agreements, Litigation Risk Agent assesses competitive IP exposure, Infringement Scanner searches for unauthorized use.",
+          why: "Zero missed renewals, proactive licensing revenue, and early warning on competitive IP threats.",
+          diagram: ["SM", "Architect", "Filing Track", "Renewal", "Licensing", "Litigation", "Infringement"]
+        }
+      ]
+    },
+    {
+      id: "healthcare",
+      icon: "🏥",
+      name: "Healthcare",
+      tags: ["services"],
+      cases: [
+        {
+          name: "Coordinated Care Pathways",
+          agents: "Test Scheduler, Referral Coordinator, Patient Notifier, Lab Agent, Pharmacy Agent, Care Team Sync",
+          whatTheyDo: "25+ care-team agents work in parallel. Test Scheduler books diagnostics, Referral Coordinator routes to specialists, Patient Notifier handles all patient comms, Lab and Pharmacy agents track orders and dispensing.",
+          why: "Care gaps eliminated. Patients get coordinated care without falling through administrative cracks.",
+          diagram: ["SM", "Architect", "Test Sched", "Referral", "Patient Notif", "Lab", "Pharmacy", "Care Sync"]
+        },
+        {
+          name: "Hospital Operations",
+          agents: "Bed Manager, OR Scheduler, Staffing Agent, Inventory Agent, Patient Flow Agent",
+          whatTheyDo: "Bed Manager tracks real-time occupancy, OR Scheduler optimizes surgical blocks, Staffing Agent matches nurses to wards, Inventory Agent monitors supplies, Patient Flow Agent predicts and manages bottlenecks.",
+          why: "Hospital capacity maximized, staff burnout reduced, and patient wait times cut through continuous optimization.",
+          diagram: ["SM", "Architect", "Bed Mgr", "OR Sched", "Staffing", "Inventory", "Patient Flow"]
+        },
+        {
+          name: "Pharmacovigilance",
+          agents: "Records Analyzer, Adverse Event Monitor, Drug Interaction Checker, Signal Detector, Regulatory Reporter",
+          whatTheyDo: "Records Analyzer ingests clinical data, Adverse Event Monitor flags safety signals, Drug Interaction Checker cross-references combinations, Signal Detector identifies population-level trends, Regulatory Reporter files submissions.",
+          why: "Safety signals detected earlier, regulatory filings automated, and patient safety outcomes improved at scale.",
+          diagram: ["SM", "Architect", "Records", "Adverse Events", "Drug Interact", "Signal Detect", "Reg Report"]
+        }
+      ]
+    },
+    {
+      id: "real-estate",
+      icon: "🏢",
+      name: "Real Estate",
+      tags: ["finance", "services"],
+      cases: [
+        {
+          name: "Property Lifecycle Management",
+          agents: "Broker Agent, Lender Coordinator, Inspector Agent, Title Agent, Insurance Agent",
+          whatTheyDo: "All transaction parties coordinated by a single orchestration layer. Broker shares docs with Lender, Inspector findings trigger Title review, Insurance Agent issues policy upon closing.",
+          why: "Transaction timelines compressed 40%. Buyers and sellers experience fewer delays and zero lost documents.",
+          diagram: ["SM", "Architect", "Broker", "Lender", "Inspector", "Title", "Insurance"]
+        },
+        {
+          name: "Commercial Lease Optimization",
+          agents: "Occupancy Analyzer, Renewal Probability Agent, CapEx Planner, Tenant Credit Agent, Portfolio Optimizer",
+          whatTheyDo: "Occupancy Analyzer tracks utilization, Renewal Probability Agent scores lease renewal likelihood, CapEx Planner coordinates improvements, Tenant Credit Agent monitors financial health, Portfolio Optimizer balances yield across assets.",
+          why: "Vacancy rates minimized, lease renewals maximized, and capital allocation optimized across the portfolio.",
+          diagram: ["SM", "Architect", "Occupancy", "Renewal Prob", "CapEx", "Credit", "Portfolio Opt"]
+        }
+      ]
+    },
+    {
+      id: "insurance",
+      icon: "🛡️",
+      name: "Insurance",
+      tags: ["finance", "services"],
+      cases: [
+        {
+          name: "Claims Orchestration",
+          agents: "Intake Agent, Fraud Detector, Adjuster Router, Medical Validator, Settlement Agent",
+          whatTheyDo: "Intake Agent captures and classifies claims instantly, Fraud Detector scores each claim, Adjuster Router assigns to the right specialist, Medical Validator checks records, Settlement Agent executes approved payments.",
+          why: "Claims cycle cut from weeks to days. Fraud losses reduced, adjuster productivity doubled.",
+          diagram: ["SM", "Architect", "Intake", "Fraud Detect", "Adjuster Route", "Medical Val", "Settlement"]
+        },
+        {
+          name: "Underwriting Collaboration",
+          agents: "Risk Analyzer, Pricing Optimizer, Policy Issuer, Compliance Agent, Syndicate Coordinator",
+          whatTheyDo: "Risk Analyzer aggregates all underwriting data, Pricing Optimizer finds optimal premium, Compliance Agent validates regulatory requirements, Syndicate Coordinator aligns co-insurers, Policy Issuer generates final documentation.",
+          why: "Faster policy issuance, better-priced risk, and seamless coordination across complex syndicated deals.",
+          diagram: ["SM", "Architect", "Risk Analyze", "Pricing Opt", "Policy Issue", "Compliance", "Syndicate"]
+        },
+        {
+          name: "Enterprise Risk Modeling",
+          agents: "Financial Risk Agent, Operational Risk Agent, Catastrophe Model Agent, Aggregation Agent, Report Agent",
+          whatTheyDo: "Each risk domain runs independently, Aggregation Agent merges exposures into a unified enterprise view, Report Agent generates board-ready risk dashboards.",
+          why: "Holistic risk visibility enables smarter capital allocation and regulatory stress test responses.",
+          diagram: ["SM", "Architect", "Financial Risk", "Ops Risk", "CAT Model", "Aggregation", "Reporting"]
+        }
+      ]
+    },
+    {
+      id: "manufacturing",
+      icon: "🏭",
+      name: "Manufacturing",
+      tags: ["operations", "tech"],
+      cases: [
+        {
+          name: "Production Orchestration",
+          agents: "Plant Sensor Agent, MES Connector, Planning Agent, Quality Agent, Maintenance Agent",
+          whatTheyDo: "Plant Sensor Agent ingests real-time machine telemetry, MES Connector interfaces with manufacturing systems, Planning Agent adjusts production schedules, Quality Agent flags defects inline, Maintenance Agent schedules interventions before failures.",
+          why: "OEE improves 15–30%, unplanned downtime eliminated, quality yield rates increase.",
+          diagram: ["SM", "Architect", "Plant Sensor", "MES Connect", "Planning", "Quality", "Maintenance"]
+        },
+        {
+          name: "Digital Twin Operations",
+          agents: "Design Sync Agent, Engineering Agent, Supply Chain Agent, Production Mirror Agent, Deviation Detector",
+          whatTheyDo: "Digital twins synchronized in real-time with physical operations. Design changes cascade through engineering, supply chain, and production simultaneously. Deviation Detector alerts when reality diverges from model.",
+          why: "Design-to-production cycles accelerated, supply chain surprises eliminated, and engineering changes risk-assessed instantly.",
+          diagram: ["SM", "Architect", "Design Sync", "Engineering", "Supply Chain", "Production", "Deviation"]
+        },
+        {
+          name: "Predictive Maintenance Fleet",
+          agents: "Sensor Monitor, Failure Predictor, Parts Agent, Work Order Agent, Technician Dispatcher",
+          whatTheyDo: "Sensor Monitor watches hundreds of machines simultaneously, Failure Predictor calculates remaining useful life, Parts Agent ensures components are on hand, Work Order Agent prepares job documentation, Technician Dispatcher routes the right skills.",
+          why: "Maintenance shifts from reactive to predictive. Equipment life extended, emergency repair costs eliminated.",
+          diagram: ["SM", "Architect", "Sensor Mon", "Failure Pred", "Parts", "Work Order", "Dispatcher"]
+        }
+      ]
+    },
+    {
+      id: "retail",
+      icon: "🛍️",
+      name: "Retail",
+      tags: ["operations", "services"],
+      cases: [
+        {
+          name: "Dynamic Store Optimization",
+          agents: "Demand Signal Agent, Layout Optimizer, Pricing Agent, Promo Coordinator, Location Sync Agent",
+          whatTheyDo: "Demand Signal Agent aggregates sales and footfall data, Layout Optimizer suggests planogram changes, Pricing Agent runs markdown and promotional logic, Promo Coordinator aligns campaigns, Location Sync Agent propagates changes across stores.",
+          why: "Revenue per square foot increases, markdowns reduced, and promotions land with better timing and precision.",
+          diagram: ["SM", "Architect", "Demand Signal", "Layout Opt", "Pricing", "Promo", "Location Sync"]
+        },
+        {
+          name: "Fulfillment Network Coordination",
+          agents: "In-Store Agent, Curbside Agent, DC Agent, Last-Mile Agent, Stock Balancer",
+          whatTheyDo: "Each fulfillment channel managed independently, Stock Balancer redistributes inventory dynamically between nodes to satisfy demand with minimal shipping cost.",
+          why: "Split shipments and out-of-stocks eliminated. Fulfillment costs drop while delivery speed improves.",
+          diagram: ["SM", "Architect", "In-Store", "Curbside", "DC", "Last-Mile", "Stock Balance"]
+        },
+        {
+          name: "Omnichannel Experience",
+          agents: "Digital Assistant, CRM Agent, Inventory Agent, Loyalty Agent, Channel Merger",
+          whatTheyDo: "Digital Assistant handles online interactions, CRM Agent surfaces customer history, Inventory Agent confirms availability, Loyalty Agent applies rewards, Channel Merger ensures online and offline data are always in sync.",
+          why: "Customers experience one brand, not disjointed channels. Loyalty increases, returns decrease.",
+          diagram: ["SM", "Architect", "Digital Asst", "CRM", "Inventory", "Loyalty", "Channel Merge"]
+        }
+      ]
+    },
+    {
+      id: "agriculture",
+      icon: "🌾",
+      name: "Agriculture",
+      tags: ["operations"],
+      cases: [
+        {
+          name: "Farm-to-Fork Coordination",
+          agents: "Soil Sensor Agent, Irrigation Agent, Pest Scout Agent, Market Demand Agent, Harvest Coordinator",
+          whatTheyDo: "Soil and irrigation agents manage field conditions, Pest Scout Agent flags infestations early, Market Demand Agent aligns harvest timing with pricing windows, Harvest Coordinator mobilizes equipment and labor.",
+          why: "Yield improves, waste drops, and farm revenue optimized by aligning production with market demand.",
+          diagram: ["SM", "Architect", "Soil Sensor", "Irrigation", "Pest Scout", "Market Demand", "Harvest"]
+        },
+        {
+          name: "Cooperative Field Management",
+          agents: "Weather Agent, Soil Sharing Agent, Growth Tracker, Best Practice Agent, Cooperative Coordinator",
+          whatTheyDo: "Cooperative members share real-time weather, soil, and growth data. Best Practice Agent identifies what's working across plots and distributes learnings. Cooperative Coordinator manages shared equipment scheduling.",
+          why: "Small farms gain enterprise-scale intelligence. Resource sharing reduces costs while yields improve collectively.",
+          diagram: ["SM", "Architect", "Weather", "Soil Sharing", "Growth Track", "Best Practice", "Coop Coord"]
+        }
+      ]
+    },
+    {
+      id: "education",
+      icon: "🎓",
+      name: "Education",
+      tags: ["services", "people"],
+      cases: [
+        {
+          name: "Adaptive Campus Scheduling",
+          agents: "Class Schedule Agent, Facility Agent, Resource Agent, Conflict Resolver, Staffing Agent",
+          whatTheyDo: "Class Schedule Agent optimizes timetables, Facility Agent manages room assignments, Resource Agent allocates equipment, Conflict Resolver detects and eliminates scheduling clashes, Staffing Agent confirms faculty availability.",
+          why: "Room utilization maximized, scheduling conflicts eliminated, and faculty time protected.",
+          diagram: ["SM", "Architect", "Class Sched", "Facility", "Resource", "Conflict Res", "Staffing"]
+        },
+        {
+          name: "Distributed Tutoring Networks",
+          agents: "Learning Bot, Progress Agent, Content Repository Agent, Adaptive Pacing Agent, Parent Notifier",
+          whatTheyDo: "Learning Bot delivers personalized instruction, Progress Agent tracks mastery continuously, Content Repository Agent surfaces the right material at the right moment, Adaptive Pacing Agent adjusts difficulty, Parent Notifier keeps families informed.",
+          why: "Every student gets a personalized learning path. Outcomes improve, teacher bandwidth freed for high-value interaction.",
+          diagram: ["SM", "Architect", "Learning Bot", "Progress", "Content Repo", "Pacing", "Parent Notify"]
+        },
+        {
+          name: "Lab Resource Coordination",
+          agents: "Equipment Booking Agent, Safety Monitor, Instruction Agent, Usage Tracker, Maintenance Agent",
+          whatTheyDo: "Equipment Booking Agent manages reservations across departments, Safety Monitor enforces protocols, Instruction Agent delivers pre-lab briefings, Usage Tracker logs experiments, Maintenance Agent schedules calibration.",
+          why: "Expensive equipment utilized to capacity. Safety incidents eliminated. Researchers spend time on science, not logistics.",
+          diagram: ["SM", "Architect", "Equipment", "Safety Mon", "Instruction", "Usage Track", "Maintenance"]
+        }
+      ]
+    },
+    {
+      id: "hr",
+      icon: "👥",
+      name: "HR",
+      tags: ["people"],
+      cases: [
+        {
+          name: "Talent Marketplace",
+          agents: "Recruiter Agent, Candidate Matcher, Onboarding Agent, L&D Coordinator, Offer Generator",
+          whatTheyDo: "Recruiter Agent sources and screens, Candidate Matcher scores fit across dimensions, Onboarding Agent coordinates day-one logistics, L&D Coordinator maps learning paths, Offer Generator creates personalized compensation packages.",
+          why: "Time-to-hire cut 50%, candidate experience improved, and new hires productive faster.",
+          diagram: ["SM", "Architect", "Recruiter", "Matcher", "Onboarding", "L&D", "Offer Gen"]
+        },
+        {
+          name: "Cross-Department Allocation",
+          agents: "Project Manager Agent, Payroll Agent, Benefits Agent, Availability Tracker, Allocation Optimizer",
+          whatTheyDo: "Project Manager Agent maps resource needs, Availability Tracker monitors workloads, Payroll and Benefits agents ensure compliance when workers move between departments, Allocation Optimizer matches skills to projects.",
+          why: "Right people on the right projects. Over-allocation eliminated, project success rates improve.",
+          diagram: ["SM", "Architect", "Project Mgr", "Payroll", "Benefits", "Availability", "Allocation"]
+        },
+        {
+          name: "Employee Experience Platform",
+          agents: "Feedback Agent, Wellness Agent, Career Path Agent, Recognition Agent, Engagement Analyzer",
+          whatTheyDo: "Feedback Agent collects and analyzes sentiment continuously, Wellness Agent suggests resources, Career Path Agent maps development opportunities, Recognition Agent surfaces achievements, Engagement Analyzer predicts attrition risk.",
+          why: "Attrition drops, engagement scores rise, and HR acts before problems escalate instead of after.",
+          diagram: ["SM", "Architect", "Feedback", "Wellness", "Career Path", "Recognition", "Engagement"]
+        }
+      ]
+    },
+    {
+      id: "marketing",
+      icon: "📣",
+      name: "Marketing",
+      tags: ["services"],
+      cases: [
+        {
+          name: "Multi-Channel Campaign Orchestration",
+          agents: "Channel Agent, Audience Segmenter, Creative Agent, Attribution Agent, Budget Optimizer",
+          whatTheyDo: "Channel Agent manages each platform independently, Audience Segmenter refines targeting in real-time, Creative Agent generates and tests variants, Attribution Agent tracks conversions across touch points, Budget Optimizer reallocates spend to best performers.",
+          why: "Marketing ROI improves, wasted spend eliminated, and campaigns adapt to performance continuously.",
+          diagram: ["SM", "Architect", "Channel", "Audience", "Creative", "Attribution", "Budget Opt"]
+        },
+        {
+          name: "Brand Safety Mesh",
+          agents: "Content Review Agent, Compliance Agent, Brand Safety Scorer, Placement Monitor, Incident Handler",
+          whatTheyDo: "Every piece of content reviewed before publication, Compliance Agent checks regulatory requirements, Brand Safety Scorer evaluates context, Placement Monitor watches where ads appear, Incident Handler coordinates rapid response to brand threats.",
+          why: "Brand reputation protected proactively. Compliance violations avoided, unsafe placements caught before they damage.",
+          diagram: ["SM", "Architect", "Content Rev", "Compliance", "Brand Safety", "Placement", "Incident"]
+        },
+        {
+          name: "Real-Time Influence Network",
+          agents: "Influencer Scout, Community Manager Agent, Sentiment Scout, Content Coordinator, Campaign Amplifier",
+          whatTheyDo: "Influencer Scout identifies the right voices, Community Manager Agent monitors conversations, Sentiment Scout tracks audience response, Content Coordinator aligns messaging, Campaign Amplifier triggers boosts when momentum peaks.",
+          why: "Influence campaigns reach the right communities with the right message at the right moment — at scale.",
+          diagram: ["SM", "Architect", "Influencer", "Community Mgr", "Sentiment", "Content Coord", "Amplifier"]
+        }
+      ]
+    },
+    {
+      id: "construction",
+      icon: "🏗️",
+      name: "Construction",
+      tags: ["operations"],
+      cases: [
+        {
+          name: "Site Logistics Synchronization",
+          agents: "Equipment Agent, Material Agent, Safety Monitor, Subcontractor Coordinator, Delivery Scheduler",
+          whatTheyDo: "Equipment Agent tracks machinery locations, Material Agent coordinates delivery windows, Safety Monitor enforces site protocols, Subcontractor Coordinator aligns trades, Delivery Scheduler prevents congestion.",
+          why: "Site delays from logistics failures eliminated. Materials arrive when needed, equipment is where it's needed.",
+          diagram: ["SM", "Architect", "Equipment", "Material", "Safety Mon", "Subcontractor", "Delivery"]
+        },
+        {
+          name: "Prefab-to-Field Integration",
+          agents: "Supplier Agent, Production Scheduler, QA Agent, On-Site Coordinator, Install Sequencer",
+          whatTheyDo: "Supplier Agent tracks prefab manufacturing, Production Scheduler aligns factory output with site readiness, QA Agent validates quality before shipment, On-Site Coordinator prepares receiving, Install Sequencer plans assembly order.",
+          why: "Prefab projects delivered on schedule with zero field rework from quality issues.",
+          diagram: ["SM", "Architect", "Supplier", "Prod Sched", "QA", "On-Site Coord", "Install Seq"]
+        }
+      ]
+    },
+    {
+      id: "energy",
+      icon: "⚡",
+      name: "Energy",
+      tags: ["operations", "tech"],
+      cases: [
+        {
+          name: "Microgrid Coordination",
+          agents: "Generation Agent, Storage Agent, Load Agent, Demand-Response Agent, Grid Balancer",
+          whatTheyDo: "Generation Agent monitors solar/wind output, Storage Agent manages battery state, Load Agent tracks consumption, Demand-Response Agent adjusts loads in real-time, Grid Balancer maintains frequency and voltage stability.",
+          why: "Energy costs minimized, renewable integration maximized, grid reliability maintained without human operators.",
+          diagram: ["SM", "Architect", "Generation", "Storage", "Load", "Demand-Response", "Grid Balance"]
+        },
+        {
+          name: "Grid Maintenance Orchestration",
+          agents: "Inspection Agent, Repair Dispatcher, Parts Agent, Crew Coordinator, Outage Predictor",
+          whatTheyDo: "Inspection Agent monitors asset health across thousands of nodes, Outage Predictor flags imminent failures, Parts Agent ensures inventory readiness, Crew Coordinator dispatches field teams, Repair Dispatcher prioritizes by impact.",
+          why: "Unplanned outages reduced dramatically. Maintenance crews deployed proactively, minimizing downtime and customer impact.",
+          diagram: ["SM", "Architect", "Inspection", "Outage Pred", "Parts", "Crew Coord", "Repair"]
+        }
+      ]
+    },
+    {
+      id: "government",
+      icon: "🏛️",
+      name: "Government",
+      tags: ["services"],
+      cases: [
+        {
+          name: "Citizen Services Hub",
+          agents: "Permit Agent, Tax Agent, Benefits Agent, Identity Verifier, Department Router",
+          whatTheyDo: "Citizens submit once; Department Router directs requests to the right agencies, Identity Verifier authenticates once across services, Permit and Benefits agents process applications in parallel, reducing wait times dramatically.",
+          why: "Citizens experience government as one organization. Processing times drop, satisfaction improves, staff redirected to complex cases.",
+          diagram: ["SM", "Architect", "Permit", "Tax", "Benefits", "Identity", "Dept Router"]
+        },
+        {
+          name: "Emergency Response Coordination",
+          agents: "First Responder Agent, Logistics Agent, Medical Coordinator, Comms Agent, Situational Awareness Agent",
+          whatTheyDo: "First Responder Agent dispatches units, Logistics Agent coordinates supplies and equipment, Medical Coordinator manages triage and hospital capacity, Comms Agent handles public communications, Situational Awareness Agent maintains real-time incident map.",
+          why: "Minutes saved in emergency coordination save lives. Resources reach the right place faster, communication gaps eliminated.",
+          diagram: ["SM", "Architect", "Responders", "Logistics", "Medical", "Comms", "Situational"]
+        }
+      ]
+    },
+    {
+      id: "hospitality",
+      icon: "🏨",
+      name: "Hospitality",
+      tags: ["services"],
+      cases: [
+        {
+          name: "Guest Experience Orchestration",
+          agents: "Booking Agent, Concierge Agent, Housekeeping Coordinator, Dining Agent, Personalization Engine",
+          whatTheyDo: "Booking Agent captures preferences at reservation, Personalization Engine distributes guest profile to all departments, Housekeeping Coordinator ensures room is ready per preferences, Concierge Agent anticipates requests, Dining Agent personalizes menus.",
+          why: "Guests feel known without asking. Satisfaction scores rise, loyalty increases, staff efficiency improves.",
+          diagram: ["SM", "Architect", "Booking", "Concierge", "Housekeeping", "Dining", "Personalize"]
+        },
+        {
+          name: "Revenue Management Network",
+          agents: "Pricing Agent, Occupancy Forecaster, Event Monitor, Channel Agent, Yield Optimizer",
+          whatTheyDo: "Pricing Agent adjusts rates dynamically, Occupancy Forecaster models demand curves, Event Monitor tracks local events that affect demand, Channel Agent manages OTA and direct distributions, Yield Optimizer balances rate and occupancy.",
+          why: "RevPAR optimized continuously. Hotels capture demand peaks and minimize low-demand losses.",
+          diagram: ["SM", "Architect", "Pricing", "Occupancy", "Event Monitor", "Channel", "Yield Opt"]
+        }
+      ]
+    },
+    {
+      id: "automotive",
+      icon: "🚗",
+      name: "Automotive",
+      tags: ["operations", "tech"],
+      cases: [
+        {
+          name: "Connected Vehicle Fleet",
+          agents: "Diagnostics Agent, Route Optimizer, Maintenance Agent, Driver Safety Agent, Fleet Coordinator",
+          whatTheyDo: "Diagnostics Agent monitors vehicle health in real-time, Route Optimizer adjusts paths for traffic and efficiency, Maintenance Agent predicts and schedules service, Driver Safety Agent monitors behavior and intervenes, Fleet Coordinator optimizes utilization.",
+          why: "Fleet costs drop, driver safety improves, and vehicles stay on the road instead of in the shop.",
+          diagram: ["SM", "Architect", "Diagnostics", "Route Opt", "Maintenance", "Driver Safety", "Fleet Coord"]
+        },
+        {
+          name: "Supply Chain Resilience",
+          agents: "Tier-1 Agent, Tier-2 Agent, Tier-3 Agent, Assembly Coordinator, Quality Gate Agent",
+          whatTheyDo: "Multi-tier supplier visibility in a single orchestration layer. Disruptions at any tier surfaced instantly, Assembly Coordinator adjusts production schedules, Quality Gate Agent validates parts before they enter the line.",
+          why: "Production stoppages from supply disruptions eliminated. Quality defects caught upstream, not at the assembly line.",
+          diagram: ["SM", "Architect", "Tier-1", "Tier-2", "Tier-3", "Assembly", "Quality Gate"]
+        }
+      ]
+    },
+    {
+      id: "telecom",
+      icon: "📡",
+      name: "Telecom",
+      tags: ["tech"],
+      cases: [
+        {
+          name: "Network Operations Center",
+          agents: "Fault Detector, Traffic Monitor, Capacity Planner, Customer Impact Agent, Resolution Coordinator",
+          whatTheyDo: "Fault Detector monitors thousands of nodes simultaneously, Traffic Monitor identifies congestion before it affects customers, Capacity Planner triggers upgrades proactively, Customer Impact Agent estimates affected subscribers, Resolution Coordinator dispatches field teams.",
+          why: "Network issues resolved before customers notice. MTTR reduced, customer satisfaction protected.",
+          diagram: ["SM", "Architect", "Fault Detect", "Traffic Mon", "Capacity", "Customer Impact", "Resolution"]
+        },
+        {
+          name: "Customer Lifecycle Management",
+          agents: "Sales Agent, Provisioning Agent, Support Agent, Billing Agent, Churn Predictor",
+          whatTheyDo: "Sales Agent qualifies and closes, Provisioning Agent activates services, Support Agent resolves issues with full context, Billing Agent handles disputes, Churn Predictor identifies at-risk subscribers and triggers retention offers.",
+          why: "Churn reduced, lifetime value extended, and every customer interaction informed by complete history.",
+          diagram: ["SM", "Architect", "Sales", "Provisioning", "Support", "Billing", "Churn Pred"]
+        }
+      ]
+    }
+  ];
+
+  /* ═══ RENDER ═══ */
+  function buildDiagram(nodes) {
+    const types = ["sm", "arch", ...Array(nodes.length - 2).fill("agent")];
+    return nodes.map((n, i) => {
+      const arrow = i < nodes.length - 1 ? '<span class="d-arrow">›</span>' : '';
+      return `<span class="d-node ${types[i]}">${n}</span>${arrow}`;
+    }).join('');
+  }
+
+  function buildCard(ind, delay) {
+    const casesHtml = ind.cases.map(c => `
+      <div class="case-item">
+        <div class="case-name">${c.name}</div>
+        <div class="case-section">
+          <div class="case-section-label">// What the agents do</div>
+          <div class="case-section-text">${c.whatTheyDo}</div>
+        </div>
+        <div class="case-profit">
+          <strong>Why it's profitable:</strong> ${c.why}
+        </div>
+        <div class="mini-diagram">
+          <div class="diagram-flow">${buildDiagram(c.diagram)}</div>
+        </div>
+        <a class="case-link" href="synapse.html">Learn more about SYNAPSE →</a>
+      </div>
+    `).join('');
+
+    return `
+      <div class="industry-card"
+           data-id="${ind.id}"
+           data-name="${ind.name.toLowerCase()}"
+           data-cases="${ind.cases.map(c => c.name.toLowerCase()).join(' ')}"
+           data-agents="${ind.cases.map(c => c.agents.toLowerCase()).join(' ')}"
+           data-tags="${ind.tags.join(' ')}"
+           style="animation-delay: ${delay}ms">
+        <div class="industry-header" onclick="toggleCard('${ind.id}')">
+          <span class="industry-icon">${ind.icon}</span>
+          <div class="industry-meta">
+            <div class="industry-name">${ind.name}</div>
+            <div class="industry-count">${ind.cases.length} use case${ind.cases.length > 1 ? 's' : ''}</div>
+          </div>
+          <span class="industry-chevron">›</span>
+        </div>
+        <div class="cases-panel">
+          ${casesHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  const grid = document.getElementById('industries-grid');
+  industries.forEach((ind, i) => {
+    grid.insertAdjacentHTML('beforeend', buildCard(ind, i * 40));
+  });
+
+  /* Trigger fade-in */
+  setTimeout(() => {
+    document.querySelectorAll('.industry-card').forEach(c => c.classList.add('visible'));
+  }, 100);
+
+  /* ═══ TOGGLE CARD ═══ */
+  function toggleCard(id) {
+    const card = document.querySelector(`[data-id="${id}"]`);
+    const isOpen = card.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.industry-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  /* ═══ SEARCH ═══ */
+  const searchInput = document.getElementById('search-input');
+  let activeFilter = 'all';
+
+  function applyFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.industry-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const nameMatch = card.dataset.name.includes(query);
+      const caseMatch = card.dataset.cases.includes(query);
+      const agentMatch = card.dataset.agents.includes(query);
+      const tagMatch = activeFilter === 'all' || card.dataset.tags.includes(activeFilter);
+      const textMatch = !query || nameMatch || caseMatch || agentMatch;
+
+      if (textMatch && tagMatch) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+        card.classList.remove('open');
+      }
+    });
+
+    const noResults = document.getElementById('no-results');
+    noResults.classList.toggle('visible', visible === 0);
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  /* ═══ FILTER TAGS ═══ */
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  /* ═══ INTERSECTION OBSERVER ═══ */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.industry-card').forEach(card => observer.observe(card));
+</script>
+</body>
+</html>
