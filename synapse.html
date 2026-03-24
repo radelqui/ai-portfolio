@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYNAPSE — Multi-Agent AI Orchestration Methodology</title>
+
+  <meta name="description" content="SYNAPSE: A multi-agent AI orchestration methodology. Like synapses connect neurons, SYNAPSE connects AI agents into a distributed thinking network.">
+  <meta name="keywords" content="SYNAPSE, AI orchestration, multi-agent, AI methodology, Claude, LLM, AI Engineer, Carlos De La Torre">
+  <meta name="author" content="Carlos De La Torre">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SYNAPSE — Multi-Agent AI Orchestration Methodology">
+  <meta property="og:description" content="29+ agents. 7 projects. 46 AI models. One methodology that thinks like a brain.">
+  <meta property="og:url" content="https://app.huyghusrl.com/ai-portfolio/synapse.html">
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #ffffff;
+      --bg-panel: #f8f8fa;
+      --bg-card: #ffffff;
+      --border: #e8e8ee;
+      --border-glow: #da775620;
+      --green: #059669;
+      --green-dim: #05966940;
+      --green-dark: #05966912;
+      --blue: #00b4ff;
+      --blue-dim: #00b4ff40;
+      --orange: #da7756;
+      --orange-dim: #da775640;
+      --orange-dark: #da775612;
+      --orange-glow: #da775630;
+      --purple: #a855f7;
+      --text: #1a1a1a;
+      --text-dim: #888888;
+      --text-mid: #666666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ═══ SCANLINES ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+        transparent, transparent 2px,
+        rgba(0, 0, 0, 0.004) 2px,
+        rgba(0, 0, 0, 0.004) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ═══ NETWORK MESH BACKGROUND ═══ */
+    #neural-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--orange); }
+
+    /* ═══ SECTIONS WRAPPER ═══ */
+    main { position: relative; z-index: 1; }
+
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section.full-width {
+      max-width: none;
+      padding: 6rem 0;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ═══ SECTION LABEL ═══ */
+    .section-label {
+      font-size: 0.65rem;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--orange-dim), transparent);
+      max-width: 120px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title .accent { color: var(--orange); }
+    .section-title .accent-green { color: var(--green); }
+    .section-title .accent-blue { color: var(--blue); }
+
+    .section-desc {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 680px;
+    }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+      max-width: none;
+      margin: 0;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(218, 119, 86, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(218, 119, 86, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fff4f0;
+      border: 1px solid var(--orange-dim);
+      color: var(--orange);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--orange-dim); }
+      50% { opacity: 0.4; box-shadow: none; }
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .synapse-word {
+      display: inline-block;
+      color: transparent;
+      background: linear-gradient(135deg, #da7756 0%, #ff9a70 40%, #da7756 70%, #c05a3a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 0 40px rgba(218, 119, 86, 0.5));
+      animation: synapse-glow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes synapse-glow {
+      0% { filter: drop-shadow(0 2px 8px rgba(218, 119, 86, 0.25)); }
+      100% { filter: drop-shadow(0 4px 16px rgba(218, 119, 86, 0.45)); }
+    }
+
+    .hero-subtitle {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      color: var(--text-mid);
+      font-weight: 400;
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--text-dim);
+      font-style: italic;
+      border-left: 2px solid var(--orange-dim);
+      padding-left: 1rem;
+      margin-bottom: 3rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .hero-tagline em { color: var(--orange); font-style: normal; }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      background: #c86640;
+      box-shadow: 0 4px 16px rgba(218, 119, 86, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--orange-dim);
+      color: var(--orange);
+    }
+
+    /* ═══ WHAT IS SYNAPSE ═══ */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .what-grid { grid-template-columns: 1fr; }
+    }
+
+    .what-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      padding: 2rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .what-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--orange), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .what-card:hover { border-color: var(--orange-dim); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); }
+    .what-card:hover::before { opacity: 1; }
+
+    .what-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .what-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .what-card p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .not-this {
+      background: #fff5f5;
+      border-color: rgba(255, 68, 68, 0.2) !important;
+    }
+
+    .not-this h3 { color: #ff4444; }
+    .not-this::before { background: linear-gradient(to right, #ff4444, transparent) !important; }
+
+    /* ═══ HIERARCHY ═══ */
+    .hierarchy-section {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hierarchy-diagram {
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .hierarchy-node {
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .h-level {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0;
+    }
+
+    .h-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s;
+      min-width: 280px;
+    }
+
+    .h-card:hover { transform: scale(1.02); }
+
+    .h-card.sm {
+      border-color: var(--orange-dim);
+      background: linear-gradient(135deg, rgba(218, 119, 86, 0.05), #ffffff);
+      box-shadow: 0 2px 16px rgba(218, 119, 86, 0.1);
+    }
+
+    .h-card.arch {
+      border-color: var(--blue-dim);
+      background: linear-gradient(135deg, rgba(0, 180, 255, 0.04), #ffffff);
+    }
+
+    .h-card.squad {
+      border-color: var(--green-dim);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.04), #ffffff);
+    }
+
+    .h-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .h-card.sm .h-title { color: var(--orange); }
+    .h-card.arch .h-title { color: var(--blue); }
+    .h-card.squad .h-title { color: var(--green); }
+
+    .h-model {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .h-desc {
+      font-size: 0.72rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+
+    .h-connector {
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--orange-dim), var(--blue-dim));
+      margin: 0 auto;
+      position: relative;
+      animation: flow-down 2s linear infinite;
+    }
+
+    .h-connector.to-squad {
+      background: linear-gradient(to bottom, var(--blue-dim), var(--green-dim));
+    }
+
+    @keyframes flow-down {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    .squad-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .squad-chip {
+      background: #f0faf6;
+      border: 1px solid var(--green-dim);
+      border-radius: 2px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.65rem;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      animation: chip-pulse 3s ease-in-out infinite;
+    }
+
+    .squad-chip:nth-child(2) { animation-delay: 0.4s; }
+    .squad-chip:nth-child(3) { animation-delay: 0.8s; }
+    .squad-chip:nth-child(4) { animation-delay: 1.2s; }
+    .squad-chip:nth-child(5) { animation-delay: 1.6s; }
+    .squad-chip:nth-child(6) { animation-delay: 2s; }
+
+    @keyframes chip-pulse {
+      0%, 100% { box-shadow: none; }
+      50% { box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15); }
+    }
+
+    .squad-chip:hover {
+      background: #d1fae5;
+      box-shadow: 0 2px 10px rgba(5, 150, 105, 0.15);
+    }
+
+    .arch-row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .arch-chip {
+      background: #f0f8ff;
+      border: 1px solid var(--blue-dim);
+      border-radius: 4px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.7rem;
+      color: #0088cc;
+      text-align: center;
+      min-width: 130px;
+    }
+
+    .arch-chip-label {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* ═══ KNOWLEDGE HUB ═══ */
+    .kb-visual {
+      margin-top: 3rem;
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      padding: 2.5rem;
+      overflow: hidden;
+    }
+
+    .kb-center {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .kb-orb {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(218, 119, 86, 0.12), rgba(218, 119, 86, 0.03));
+      border: 2px solid var(--orange-dim);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.2;
+      box-shadow: 0 4px 20px rgba(218, 119, 86, 0.15);
+      animation: orb-pulse 3s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes orb-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(218, 119, 86, 0.15); }
+      50% { box-shadow: 0 6px 28px rgba(218, 119, 86, 0.25); }
+    }
+
+    .kb-rings {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+    }
+
+    .kb-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--orange-dim);
+      animation: ring-expand 3s ease-out infinite;
+      opacity: 0;
+    }
+
+    .kb-ring:nth-child(1) { width: 120px; height: 120px; top: -10px; left: -10px; animation-delay: 0s; }
+    .kb-ring:nth-child(2) { width: 160px; height: 160px; top: -30px; left: -30px; animation-delay: 1s; }
+    .kb-ring:nth-child(3) { width: 200px; height: 200px; top: -50px; left: -50px; animation-delay: 2s; }
+
+    @keyframes ring-expand {
+      0% { opacity: 0.6; transform: scale(0.8); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+
+    .kb-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .kb-facts { grid-template-columns: 1fr; }
+    }
+
+    .kb-fact {
+      text-align: center;
+      padding: 1rem;
+      background: #f8f8fa;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .kb-fact-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    .kb-fact-label {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    /* ═══ NEURAL NETWORK ═══ */
+    .neural-section {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .neural-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .neural-grid { grid-template-columns: 1fr; }
+    }
+
+    .neural-diagram {
+      position: relative;
+      height: 320px;
+    }
+
+    .neural-node {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .neural-node:hover {
+      transform: scale(1.15);
+      z-index: 10;
+    }
+
+    .n-sm {
+      width: 80px; height: 80px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(218,119,86,0.15), rgba(218,119,86,0.03));
+      border: 2px solid var(--orange);
+      color: var(--orange);
+      box-shadow: 0 4px 16px rgba(218,119,86,0.2);
+      font-size: 0.6rem;
+      z-index: 5;
+      animation: node-sm-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes node-sm-pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(218,119,86,0.2); }
+      50% { box-shadow: 0 6px 24px rgba(218,119,86,0.35); }
+    }
+
+    .n-arch {
+      width: 56px; height: 56px;
+      background: radial-gradient(circle, rgba(0,180,255,0.1), rgba(0,180,255,0.02));
+      border: 1px solid var(--blue-dim);
+      color: #0088cc;
+      font-size: 0.5rem;
+      animation: node-arch-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes node-arch-pulse {
+      0%, 100% { box-shadow: 0 2px 8px rgba(0,180,255,0.1); }
+      50% { box-shadow: 0 4px 14px rgba(0,180,255,0.2); }
+    }
+
+    .n-agent {
+      width: 40px; height: 40px;
+      background: radial-gradient(circle, rgba(5,150,105,0.1), rgba(5,150,105,0.02));
+      border: 1px solid var(--green-dim);
+      color: var(--green);
+      font-size: 0.45rem;
+      animation: node-agent-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes node-agent-pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; box-shadow: 0 2px 8px rgba(5,150,105,0.15); }
+    }
+
+    .n-arch-1 { top: 8%; left: 10%; animation-delay: 0s; }
+    .n-arch-2 { top: 8%; right: 10%; animation-delay: 0.5s; }
+    .n-arch-3 { bottom: 8%; left: 10%; animation-delay: 1s; }
+    .n-arch-4 { bottom: 8%; right: 10%; animation-delay: 1.5s; }
+
+    .n-agent-1 { top: 3%; left: 38%; animation-delay: 0.2s; }
+    .n-agent-2 { top: 30%; left: 2%; animation-delay: 0.7s; }
+    .n-agent-3 { top: 30%; right: 2%; animation-delay: 0.3s; }
+    .n-agent-4 { bottom: 18%; left: 28%; animation-delay: 1.1s; }
+    .n-agent-5 { bottom: 18%; right: 28%; animation-delay: 0.9s; }
+    .n-agent-6 { bottom: 2%; left: 42%; animation-delay: 1.4s; }
+
+    .neural-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .neural-text-content .highlight-box {
+      background: #f8f8fa;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--orange);
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .highlight-box p {
+      font-size: 0.8rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .highlight-box strong { color: var(--orange); }
+
+    /* ═══ BORIS ═══ */
+    .boris-terminal {
+      margin-top: 2.5rem;
+      background: #0a0f0a;
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background: rgba(0, 255, 136, 0.05);
+      border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .t-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .t-dot.red { background: #ff5f57; }
+    .t-dot.yellow { background: #febc2e; }
+    .t-dot.green { background: #28c840; }
+    .t-label { font-size: 0.65rem; color: #6a6a80; margin-left: auto; }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-size: 0.75rem;
+      line-height: 1.9;
+    }
+
+    .t-prompt { color: #00cc66; }
+    .t-cmd { color: #e0e0e8; }
+    .t-comment { color: #6a6a80; }
+    .t-output { color: #9090a8; }
+    .t-ok { color: #00cc66; }
+    .t-warn { color: #ffb800; }
+    .t-err { color: #ff4444; }
+    .t-orange { color: var(--orange); }
+
+    .boris-rules {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .boris-rules { grid-template-columns: 1fr; }
+    }
+
+    .boris-rule {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 1rem;
+      border-radius: 4px;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .rule-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .rule-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .rule-desc {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ═══ PROXY ═══ */
+    .proxy-section {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .providers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .provider-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .provider-card:hover {
+      border-color: var(--orange-dim);
+      transform: translateY(-2px);
+    }
+
+    .provider-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .provider-models {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+    }
+
+    .provider-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .tag-free { background: #f0faf6; color: var(--green); border: 1px solid var(--green-dim); }
+    .tag-premium { background: #fff4f0; color: var(--orange); border: 1px solid var(--orange-dim); }
+
+    .cost-stat {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f8f8fa;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 4px 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cost-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .cost-text {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    .cost-text strong { color: var(--text); }
+
+    /* ═══ OPENCLAW ═══ */
+    .openclaw-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .openclaw-features { grid-template-columns: 1fr; }
+    }
+
+    .oc-feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      border-radius: 4px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .oc-feature::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--orange), var(--blue));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .oc-feature:hover { border-color: var(--orange-dim); }
+    .oc-feature:hover::after { opacity: 1; }
+
+    .oc-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .oc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .oc-desc {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* ═══ STATS ═══ */
+    .stats-section {
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 400px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .stat-block:hover {
+      border-color: var(--orange-dim);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(218,119,86,0.12);
+    }
+
+    .stat-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--orange-dim), transparent);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-num.green { color: var(--green); }
+    .stat-num.blue { color: var(--blue); }
+
+    .stat-unit {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══ REAL EXAMPLE ═══ */
+    .example-flow {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .example-flow { grid-template-columns: 1fr; }
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .flow-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .step-num.orange { background: #fff4f0; border: 1px solid var(--orange); color: var(--orange); }
+    .step-num.blue { background: #f0f8ff; border: 1px solid var(--blue); color: #0088cc; opacity: 0.7; }
+    .step-num.green { background: #f0faf6; border: 1px solid var(--green); color: var(--green); opacity: 0.7; }
+
+    .step-content h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .step-content .step-tag {
+      display: inline-block;
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 2px;
+      margin-top: 0.3rem;
+    }
+
+    .plan-preview {
+      background: #070d1a;
+      border: 1px solid #2a2a3e;
+      border-radius: 4px;
+      padding: 1.5rem;
+      font-size: 0.72rem;
+      line-height: 1.8;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+
+    .plan-line { margin-bottom: 0.1rem; }
+    .pl-key { color: var(--orange); }
+    .pl-val { color: #9090a8; }
+    .pl-green { color: #00cc66; }
+    .pl-blue { color: var(--blue); }
+    .pl-dim { color: #5a5a70; }
+    .pl-head { color: #e0e0e8; font-weight: 700; }
+    .pl-orange { color: var(--orange); }
+
+    /* ═══ PRODUCTS ═══ */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .product-card:hover {
+      border-color: var(--orange-dim);
+      transform: translateY(-2px);
+    }
+
+    .product-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+
+    .product-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .product-type {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      background: #f8f8fa;
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-name span { color: var(--orange); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.72rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--orange); }
+
+    .footer-copy {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+    }
+
+    /* ═══ SCROLL ANIMATIONS ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ═══ DIVIDER ═══ */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 2rem;
+    }
+
+    /* ═══ RESPONSIVE NAV ═══ */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Neural network background canvas -->
+  <canvas id="neural-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">SYNAPSE</div>
+    <ul class="nav-links">
+      <li><a href="#what">What is it</a></li>
+      <li><a href="#hierarchy">Hierarchy</a></li>
+      <li><a href="#knowledge">Memory</a></li>
+      <li><a href="#network">Network</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="index.html">← Portfolio</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero full-width" style="max-width:none; margin:0; padding: 8rem 2rem 6rem;">
+      <div class="hero-grid"></div>
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Active — 29+ agents in production
+        </div>
+
+        <h1 class="hero-title">
+          <span class="synapse-word">SYNAPSE</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Multi-Agent AI Orchestration Methodology
+        </p>
+
+        <p class="hero-tagline">
+          Like synapses connect neurons,<br>
+          <em>SYNAPSE connects AI agents into a thinking network</em>
+        </p>
+
+        <div class="hero-cta">
+          <a href="#what" class="btn btn-primary">Explore the system →</a>
+          <a href="#stats" class="btn btn-outline">See the numbers</a>
+          <a href="index.html" class="btn btn-outline">← Back to portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WHAT IS SYNAPSE ═══════════════ -->
+    <section id="what">
+      <div class="section-label">01 — Definition</div>
+      <h2 class="section-title reveal">What is <span class="accent">SYNAPSE</span>?</h2>
+      <p class="section-desc reveal reveal-delay-1">
+        A methodology where a human director and dozens of AI agents work in continuous coordination. Not an app. Not a plugin. A complete operating model for AI-augmented work.
+      </p>
+
+      <div class="what-grid">
+        <div class="what-card reveal reveal-delay-1">
+          <div class="what-card-icon">🧠</div>
+          <h3>Distributed artificial brain</h3>
+          <p>Multiple specialized AI agents working in parallel, each with defined scope, memory, and rules. Together they act as a single coordinated intelligence that never sleeps.</p>
+        </div>
+        <div class="what-card reveal reveal-delay-2">
+          <div class="what-card-icon">⚡</div>
+          <h3>One sentence. Full execution.</h3>
+          <p>The Service Manager receives a directive. In minutes, a full plan is drafted, validated by a second AI, approved by a human, and dispatched to the appropriate architect. Execution begins.</p>
+        </div>
+        <div class="what-card reveal reveal-delay-3">
+          <div class="what-card-icon">📡</div>
+          <h3>Across machines. In real time.</h3>
+          <p>The SM runs on Windows. Architects run on a Ubuntu server thousands of kilometers away. Orders flow. Results return. Same channel. Under 60 seconds latency.</p>
+        </div>
+        <div class="what-card not-this reveal reveal-delay-4">
+          <div class="what-card-icon">🚫</div>
+          <h3>Not a chatbot. Not an assistant.</h3>
+          <p>There is no "chat with AI" button. There are roles, rules, memory, verification gates, and hierarchies — the same structures found in high-performing human teams.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ HIERARCHY ═══════════════ -->
+    <section id="hierarchy" class="hierarchy-section full-width" style="max-width:none; margin:0;">
+      <div class="section-inner">
+        <div class="section-label">02 — Architecture</div>
+        <h2 class="section-title reveal">The <span class="accent">Hierarchy</span></h2>
+        <p class="section-desc reveal reveal-delay-1">
+          Three layers. Clear responsibilities. No agent acts outside its lane.
+        </p>
+
+        <div class="hierarchy-diagram reveal reveal-delay-2">
+
+          <!-- Layer 1: SM -->
+          <div class="h-level">
+            <div class="h-card sm">
+              <div class="h-title">Service Manager</div>
+              <div class="h-model">Human + Claude Opus 4 — Windows Desktop</div>
+              <div class="h-desc">Directs, approves plans, never executes.<br>Every major decision passes through here.</div>
+            </div>
+          </div>
+
+          <!-- Connector -->
+          <div class="h-connector" style="margin: 0 auto; width: 2px;"></div>
+
+          <!-- Layer 2: Architects -->
+          <div class="h-level">
+            <div class="h-card arch">
+              <div class="h-title">AI Architects</div>
+              <div class="h-model">Claude Sonnet 4 — Ubuntu VPS (Contabo)</div>
+              <div class="h-desc">Each architect owns a project. Plans phases, spawns squads, verifies results.</div>
+            </div>
+          </div>
+
+          <div style="margin: 0 auto; text-align: center; padding: 0.5rem 0;">
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 0.5rem;">
+              <div class="arch-chip">GestorIA RD<span class="arch-chip-label">fiscal arch</span></div>
+              <div class="arch-chip">FacturaIA<span class="arch-chip-label">OCR arch</span></div>
+              <div class="arch-chip">IA Trader<span class="arch-chip-label">trading arch</span></div>
+              <div class="arch-chip">Job Hunter<span class="arch-chip-label">portfolio arch</span></div>
+            </div>
+          </div>
+
+          <!-- Connector to squad -->
+          <div class="h-connector to-squad" style="margin: 0.5rem auto 0; width: 2px;"></div>
+
+          <!-- Layer 3: Squads -->
+          <div class="h-level">
+            <div class="h-card squad">
+              <div class="h-title">Agent Squads</div>
+              <div class="h-model">Specialized sub-agents — spawned per task</div>
+              <div class="h-desc">Focused executors. Each has a single responsibility and limited scope.</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <div class="squad-row">
+              <div class="squad-chip">frontend</div>
+              <div class="squad-chip">email agent</div>
+              <div class="squad-chip">analyst</div>
+              <div class="squad-chip">scraper</div>
+              <div class="squad-chip">db agent</div>
+              <div class="squad-chip">test runner</div>
+              <div class="squad-chip">pdf parser</div>
+              <div class="squad-chip">scheduler</div>
+              <div class="squad-chip">validator</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ KNOWLEDGE HUB ═══════════════ -->
+    <section id="knowledge">
+      <div class="section-label">03 — Memory</div>
+      <h2 class="section-title reveal">Resonant &amp; <span class="accent">Collective Memory</span></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        The synaptic space where all information flows. Agents save discoveries. Other agents find them later. Nothing gets lost between sessions, between agents, between projects.
+      </p>
+
+      <div class="kb-visual reveal reveal-delay-2">
+        <div class="kb-center" style="position:relative;">
+          <div class="kb-rings">
+            <div class="kb-ring"></div>
+            <div class="kb-ring"></div>
+            <div class="kb-ring"></div>
+          </div>
+          <div class="kb-orb">KNOWLEDGE<br>HUB</div>
+        </div>
+
+        <div class="kb-facts">
+          <div class="kb-fact">
+            <div class="kb-fact-value">24/7</div>
+            <div class="kb-fact-label">Persistent across sessions</div>
+          </div>
+          <div class="kb-fact">
+            <div class="kb-fact-value">∞</div>
+            <div class="kb-fact-label">No memory limit</div>
+          </div>
+          <div class="kb-fact">
+            <div class="kb-fact-value">7</div>
+            <div class="kb-fact-label">Projects sharing one KB</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.7rem; color: var(--text-dim);">
+            <div style="text-align:center;">
+              <div style="color: var(--orange); margin-bottom: 0.4rem;">kb_save</div>
+              Agent saves a discovery
+            </div>
+            <div style="text-align:center; display:flex; flex-direction:column; align-items:center;">
+              <div style="font-size: 1.2rem; color: var(--orange); margin-bottom: 0.4rem;">→</div>
+              <div style="font-size: 0.6rem;">Synapse propagates</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="color: var(--orange); margin-bottom: 0.4rem;">kb_read</div>
+              All agents can access
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="background: #f8f8fa; border: 1px solid var(--border); border-left: 3px solid var(--orange); padding: 1.5rem; margin-top: 1.5rem; border-radius: 0 4px 4px 0;">
+        <p style="font-size: 0.82rem; color: var(--text-mid); line-height: 1.8; font-style: italic;">
+          "What an agent discovers at 3AM — a rate limit, an API format, a bug pattern — <strong style="color:var(--orange);">every other agent knows by morning.</strong>
+          The network learns. The network remembers. You never have to explain the same thing twice."
+        </p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ NEURAL NETWORK ═══════════════ -->
+    <section id="network" class="neural-section full-width" style="max-width:none; margin:0;">
+      <div class="section-inner">
+        <div class="section-label">04 — Communication</div>
+        <h2 class="section-title reveal">Bidirectional <span class="accent">Neural Network</span></h2>
+
+        <div class="neural-grid">
+          <div class="neural-text-content reveal">
+            <p class="section-desc">
+              This is not a command chain. Every node communicates with every node. Orders flow down. Results, alerts, and discoveries flow back up.
+            </p>
+
+            <div class="highlight-box" style="background: #f8f8fa; border: 1px solid var(--border); border-left: 3px solid var(--orange); padding: 1.2rem 1.5rem; margin-top: 1.5rem; border-radius: 0 4px 4px 0;">
+              <p style="font-size: 0.8rem; color: var(--text-mid); line-height: 1.7;">
+                SM on Windows sends orders → Architect on Ubuntu VPS receives → Spawns squads → Results return via same tmux channel → <strong style="color:var(--orange);">Under 60 seconds end-to-end.</strong>
+              </p>
+            </div>
+
+            <div class="highlight-box" style="background: #f0f8ff; border: 1px solid var(--border); border-left: 3px solid var(--blue); padding: 1.2rem 1.5rem; margin-top: 1rem; border-radius: 0 4px 4px 0;">
+              <p style="font-size: 0.8rem; color: var(--text-mid); line-height: 1.7;">
+                Infrastructure: <strong style="color:var(--text);">Contabo VPS · Ubuntu 24.04 · Docker</strong><br>
+                23+ containers running in parallel.<br>
+                <strong style="color:var(--blue);">Network: tmux sessions + Knowledge Hub + WebSockets</strong>
+              </p>
+            </div>
+
+            <div class="highlight-box" style="background: #f0faf6; border: 1px solid var(--border); border-left: 3px solid var(--green); padding: 1.2rem 1.5rem; margin-top: 1rem; border-radius: 0 4px 4px 0;">
+              <p style="font-size: 0.8rem; color: var(--text-mid); line-height: 1.7;">
+                Like real synapses — each node receives, processes, and transmits. No single point of failure. If one agent crashes, others continue independently.
+              </p>
+            </div>
+          </div>
+
+          <div class="neural-diagram reveal reveal-delay-2">
+            <svg class="neural-lines" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet">
+              <!-- SM to Arch connections -->
+              <line x1="200" y1="160" x2="60" y2="40" stroke="rgba(218,119,86,0.25)" stroke-width="1.5">
+                <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="2s" repeatCount="indefinite"/>
+              </line>
+              <line x1="200" y1="160" x2="340" y2="40" stroke="rgba(218,119,86,0.25)" stroke-width="1.5">
+                <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="2.3s" repeatCount="indefinite"/>
+              </line>
+              <line x1="200" y1="160" x2="60" y2="280" stroke="rgba(218,119,86,0.25)" stroke-width="1.5">
+                <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="1.8s" repeatCount="indefinite"/>
+              </line>
+              <line x1="200" y1="160" x2="340" y2="280" stroke="rgba(218,119,86,0.25)" stroke-width="1.5">
+                <animate attributeName="stroke-opacity" values="0.1;0.5;0.1" dur="2.6s" repeatCount="indefinite"/>
+              </line>
+              <!-- Arch to Agent connections -->
+              <line x1="60" y1="40" x2="155" y2="10" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="1.5s" repeatCount="indefinite"/>
+              </line>
+              <line x1="60" y1="40" x2="8" y2="100" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="1.9s" repeatCount="indefinite"/>
+              </line>
+              <line x1="340" y1="40" x2="245" y2="10" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="1.6s" repeatCount="indefinite"/>
+              </line>
+              <line x1="340" y1="40" x2="392" y2="100" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="2.1s" repeatCount="indefinite"/>
+              </line>
+              <line x1="60" y1="280" x2="112" y2="255" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="1.7s" repeatCount="indefinite"/>
+              </line>
+              <line x1="340" y1="280" x2="288" y2="255" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="2s" repeatCount="indefinite"/>
+              </line>
+              <line x1="60" y1="280" x2="170" y2="310" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="2.2s" repeatCount="indefinite"/>
+              </line>
+              <line x1="340" y1="280" x2="230" y2="310" stroke="rgba(0,180,255,0.2)" stroke-width="1">
+                <animate attributeName="stroke-opacity" values="0.05;0.3;0.05" dur="1.4s" repeatCount="indefinite"/>
+              </line>
+              <!-- Pulse dots along lines -->
+              <circle r="3" fill="rgba(218,119,86,0.8)">
+                <animateMotion dur="2s" repeatCount="indefinite">
+                  <mpath href="#path-sm-arch1"/>
+                </animateMotion>
+              </circle>
+              <path id="path-sm-arch1" d="M200,160 L60,40" fill="none"/>
+              <circle r="3" fill="rgba(218,119,86,0.8)">
+                <animateMotion dur="2.5s" repeatCount="indefinite">
+                  <mpath href="#path-sm-arch2"/>
+                </animateMotion>
+              </circle>
+              <path id="path-sm-arch2" d="M200,160 L340,40" fill="none"/>
+              <circle r="2" fill="rgba(0,255,136,0.7)">
+                <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.5s">
+                  <mpath href="#path-arch-sm1"/>
+                </animateMotion>
+              </circle>
+              <path id="path-arch-sm1" d="M60,280 L200,160" fill="none"/>
+              <circle r="2" fill="rgba(0,255,136,0.7)">
+                <animateMotion dur="2.2s" repeatCount="indefinite" begin="1s">
+                  <mpath href="#path-arch-sm2"/>
+                </animateMotion>
+              </circle>
+              <path id="path-arch-sm2" d="M340,280 L200,160" fill="none"/>
+            </svg>
+
+            <!-- SM central node -->
+            <div class="neural-node n-sm">SM</div>
+
+            <!-- Arch nodes -->
+            <div class="neural-node n-arch n-arch-1">Arch<br>GestorIA</div>
+            <div class="neural-node n-arch n-arch-2">Arch<br>FacturaIA</div>
+            <div class="neural-node n-arch n-arch-3">Arch<br>Trader</div>
+            <div class="neural-node n-arch n-arch-4">Arch<br>JobHunt</div>
+
+            <!-- Agent nodes -->
+            <div class="neural-node n-agent n-agent-1">FE</div>
+            <div class="neural-node n-agent n-agent-2">DB</div>
+            <div class="neural-node n-agent n-agent-3">API</div>
+            <div class="neural-node n-agent n-agent-4">OCR</div>
+            <div class="neural-node n-agent n-agent-5">Email</div>
+            <div class="neural-node n-agent n-agent-6">Test</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BORIS ═══════════════ -->
+    <section id="boris">
+      <div class="section-label">05 — Quality Control</div>
+      <h2 class="section-title reveal">Quality <span class="accent">Enforcement</span></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        AI agents drift by nature. Without guardrails, they hallucinate, skip steps, and take shortcuts. Boris is the enforcement layer — a system of hooks, gates, and rules that makes quality non-negotiable.
+      </p>
+
+      <div class="boris-terminal reveal reveal-delay-2">
+        <div class="terminal-header">
+          <div class="t-dot red"></div>
+          <div class="t-dot yellow"></div>
+          <div class="t-dot green"></div>
+          <span class="t-label">boris-hook — pre-commit gate</span>
+        </div>
+        <div class="terminal-body">
+          <div class="plan-line"><span class="t-prompt">$</span> <span class="t-cmd">git commit -m "feat: add payment integration"</span></div>
+          <div class="plan-line"><span class="t-comment"># Boris pre-commit hook activates...</span></div>
+          <div class="plan-line"><span class="t-output">→ Checking last-verification.md...</span></div>
+          <div class="plan-line"><span class="t-err">✗ BLOCKED: No evidence found for this change.</span></div>
+          <div class="plan-line"><span class="t-err">  Expected: boris_verify() called with concrete result</span></div>
+          <div class="plan-line"><span class="t-err">  Found: Estado: PENDIENTE</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="t-comment"># Agent provides evidence via MCP:</span></div>
+          <div class="plan-line"><span class="t-output">boris_verify(</span></div>
+          <div class="plan-line"><span class="t-output">  what_changed: "Payment webhook handler in /api/payments.ts",</span></div>
+          <div class="plan-line"><span class="t-output">  how_verified: "curl -X POST http://localhost:3000/api/payments -d '{amount:100}' → 200 OK",</span></div>
+          <div class="plan-line"><span class="t-output">  result: "Transaction logged: ID TXN-7842, status: pending_confirmation"</span></div>
+          <div class="plan-line"><span class="t-output">)</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="t-ok">✓ Estado: APROBADO — Evidence accepted</span></div>
+          <div class="plan-line"><span class="t-ok">✓ Commit allowed. Writing to .brain/last-verification.md</span></div>
+          <div class="plan-line"><span class="t-prompt">$</span> <span class="t-green">_</span></div>
+        </div>
+      </div>
+
+      <div class="boris-rules reveal reveal-delay-3">
+        <div class="boris-rule">
+          <div class="rule-icon">🔒</div>
+          <div>
+            <div class="rule-title">No commit without evidence</div>
+            <div class="rule-desc">Every git commit requires a prior call to boris_verify with concrete output. The hook blocks if missing.</div>
+          </div>
+        </div>
+        <div class="boris-rule">
+          <div class="rule-icon">📋</div>
+          <div>
+            <div class="rule-title">30-minute memory checkpoints</div>
+            <div class="rule-desc">Agents auto-save state every 30 minutes. If context resets, they resume exactly where they left off.</div>
+          </div>
+        </div>
+        <div class="boris-rule">
+          <div class="rule-icon">🎯</div>
+          <div>
+            <div class="rule-title">Scoped roles — no lane crossing</div>
+            <div class="rule-desc">Architects plan and delegate. Sub-agents execute within a single defined task. Role boundaries are enforced by rules files.</div>
+          </div>
+        </div>
+        <div class="boris-rule">
+          <div class="rule-icon">⏱️</div>
+          <div>
+            <div class="rule-title">Quality gates before dispatch</div>
+            <div class="rule-desc">Every plan requires AI validation (Gemini) + human approval before an architect receives a task. Zero unauthorized executions.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ SYNAPSE PROXY ═══════════════ -->
+    <section id="proxy" class="proxy-section full-width" style="max-width:none; margin:0;">
+      <div class="section-inner">
+        <div class="section-label">06 — Model Routing</div>
+        <h2 class="section-title reveal">Intelligent <span class="accent-green">Model Routing</span></h2>
+        <p class="section-desc reveal reveal-delay-1">
+          46 models. 8 providers. One endpoint. Every task is matched to the right model — not the most expensive one. Cost optimization is built in from day one.
+        </p>
+
+        <div class="providers-grid reveal reveal-delay-2">
+          <div class="provider-card">
+            <div class="provider-name">Anthropic</div>
+            <div class="provider-models">Claude Opus · Sonnet · Haiku</div>
+            <span class="provider-tag tag-premium">Premium</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Google</div>
+            <div class="provider-models">Gemini 2.0 Flash · Pro</div>
+            <span class="provider-tag tag-free">Free tier</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">DeepSeek</div>
+            <div class="provider-models">R1 · V3 · Chat</div>
+            <span class="provider-tag tag-free">Free</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Qwen</div>
+            <div class="provider-models">2.5 · Coder · VL</div>
+            <span class="provider-tag tag-free">Free</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Perplexity</div>
+            <div class="provider-models">Sonar Pro · Online</div>
+            <span class="provider-tag tag-premium">Web search</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Groq</div>
+            <div class="provider-models">Llama 3 · Mixtral</div>
+            <span class="provider-tag tag-free">Ultra-fast</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">Cerebras</div>
+            <div class="provider-models">Llama 3.1 · 70B</div>
+            <span class="provider-tag tag-free">Free</span>
+          </div>
+          <div class="provider-card">
+            <div class="provider-name">OpenRouter</div>
+            <div class="provider-models">50+ models</div>
+            <span class="provider-tag tag-premium">Gateway</span>
+          </div>
+        </div>
+
+        <div class="cost-stat reveal reveal-delay-3">
+          <div class="cost-number">70%</div>
+          <div class="cost-text">
+            <strong>of all work runs on free models</strong><br>
+            DeepSeek, Qwen, Gemini Flash, Groq and Cerebras handle the bulk of agent tasks.<br>
+            Premium models (Claude Opus/Sonnet) are reserved for architecture, reasoning, and approval decisions.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ OPENCLAW ═══════════════ -->
+    <section id="openclaw">
+      <div class="section-label">07 — Auditing</div>
+      <h2 class="section-title reveal">The Watchful <span class="accent">Auditor</span></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        OpenClaw runs 24/7. Every email, search query, form submission, and agent decision is logged. Unauthorized actions are detected and reversed. A daily report arrives every evening.
+      </p>
+
+      <div class="openclaw-features">
+        <div class="oc-feature reveal reveal-delay-1">
+          <div class="oc-icon">👁️</div>
+          <div class="oc-title">Full audit trail</div>
+          <div class="oc-desc">Every action any agent takes is recorded with timestamp, agent identity, and outcome. Nothing is invisible.</div>
+        </div>
+        <div class="oc-feature reveal reveal-delay-2">
+          <div class="oc-icon">⚡</div>
+          <div class="oc-title">Auto-revert on violation</div>
+          <div class="oc-desc">Agents that act outside their authorized scope trigger an automatic rollback. Rules are enforced, not suggested.</div>
+        </div>
+        <div class="oc-feature reveal reveal-delay-3">
+          <div class="oc-icon">📊</div>
+          <div class="oc-title">Daily 7PM report</div>
+          <div class="oc-desc">Every day at 7PM, a summary is delivered: tasks completed, exceptions caught, anomalies flagged. The human stays informed without being in the loop constantly.</div>
+        </div>
+        <div class="oc-feature reveal reveal-delay-1">
+          <div class="oc-icon">🔗</div>
+          <div class="oc-title">Telegram integration</div>
+          <div class="oc-desc">Alerts and status updates arrive via Telegram in real time. The director is never more than a notification away from the current system state.</div>
+        </div>
+        <div class="oc-feature reveal reveal-delay-2">
+          <div class="oc-icon">🧪</div>
+          <div class="oc-title">Quality checkpoint</div>
+          <div class="oc-desc">Before any work is considered done, OpenClaw validates outputs against the original task definition. No self-reported success without verification.</div>
+        </div>
+        <div class="oc-feature reveal reveal-delay-3">
+          <div class="oc-icon">📡</div>
+          <div class="oc-title">WebSocket gateway</div>
+          <div class="oc-desc">Loopback WebSocket at 127.0.0.1:18789 connects all agents to the audit bus. Every message flows through a single observable channel.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ STATS ═══════════════ -->
+    <section id="stats" class="stats-section">
+      <div class="section-label" style="justify-content: center;">08 — By the numbers</div>
+      <h2 class="section-title reveal">The system <span class="accent">in production</span></h2>
+      <p class="section-desc reveal reveal-delay-1" style="margin: 0 auto;">
+        Not a demo. Not a prototype. Real numbers from a live multi-agent system running daily.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-block reveal reveal-delay-1">
+          <div class="stat-num" data-target="29" data-suffix="+">0</div>
+          <div class="stat-unit">AI agents in production</div>
+        </div>
+        <div class="stat-block reveal reveal-delay-2">
+          <div class="stat-num green" data-target="7">0</div>
+          <div class="stat-unit">projects simultaneously</div>
+        </div>
+        <div class="stat-block reveal reveal-delay-3">
+          <div class="stat-num blue" data-target="314">0</div>
+          <div class="stat-unit">companies served</div>
+        </div>
+        <div class="stat-block reveal reveal-delay-1">
+          <div class="stat-num" data-target="34" data-suffix="K+">0</div>
+          <div class="stat-unit">automated tasks executed</div>
+        </div>
+        <div class="stat-block reveal reveal-delay-2">
+          <div class="stat-num green" data-target="46">0</div>
+          <div class="stat-unit">AI models available</div>
+        </div>
+        <div class="stat-block reveal reveal-delay-3">
+          <div class="stat-num blue" data-target="23" data-suffix="+">0</div>
+          <div class="stat-unit">Docker containers running</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ REAL EXAMPLE ═══════════════ -->
+    <section id="example">
+      <div class="section-label">09 — In practice</div>
+      <h2 class="section-title reveal">One sentence in.<br><span class="accent">Full plan out.</span></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        From a single directive to a fully validated, approved, and dispatched execution plan — the SYNAPSE protocol converts intent into coordinated action.
+      </p>
+
+      <div class="example-flow">
+        <div class="flow-steps reveal reveal-delay-1">
+          <div class="flow-step">
+            <div class="step-num orange">1</div>
+            <div class="step-content">
+              <h4>SM creates the plan</h4>
+              <p>The Service Manager receives a one-line directive. SYNAPSE expands it into a full wave-based execution plan with agents, dependencies, and verification criteria.</p>
+              <span class="step-tag tag-premium">Claude Opus — Windows</span>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="step-num blue" style="opacity:1;">2</div>
+            <div class="step-content">
+              <h4>Second AI validates</h4>
+              <p>Gemini receives the plan and validates it against 6 mandatory labels: PLAN, TAREA, MODELO, BORIS, VERIFICACION, EVIDENCIA. Gaps are rejected.</p>
+              <span class="step-tag tag-free" style="background:#e8f6ff; color:#0088cc; border:1px solid #00b4ff40;">Gemini — Cross-validation</span>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="step-num orange" style="background:rgba(255,180,0,0.15); border-color:#ffb800; color:#ffb800;">3</div>
+            <div class="step-content">
+              <h4>Human approves</h4>
+              <p>Carlos reviews the plan. No agent moves until explicit approval is given. This is the last human gate before execution begins.</p>
+              <span class="step-tag" style="background:rgba(255,180,0,0.1); color:#ffb800; border:1px solid rgba(255,180,0,0.3);">Human checkpoint</span>
+            </div>
+          </div>
+
+          <div class="flow-step">
+            <div class="step-num green" style="opacity:1;">4</div>
+            <div class="step-content">
+              <h4>Architect executes</h4>
+              <p>The SM sends the task via sm-tmux. The architect reads from the Knowledge Hub, spawns sub-agents in parallel waves, and begins execution. Boris enforces quality throughout.</p>
+              <span class="step-tag tag-free">Claude Sonnet — Ubuntu VPS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-preview reveal reveal-delay-2">
+          <div class="plan-line"><span class="pl-dim">╔══════════════════════════════════════╗</span></div>
+          <div class="plan-line"><span class="pl-dim">║</span> <span class="pl-orange">SYNAPSE PLAN v4.0</span>          <span class="pl-dim">║</span></div>
+          <div class="plan-line"><span class="pl-dim">╚══════════════════════════════════════╝</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-key">STATUS:</span> <span class="pl-green">APPROVED ✓</span></div>
+          <div class="plan-line"><span class="pl-key">TO:</span> <span class="pl-val">arch-gestoriard</span></div>
+          <div class="plan-line"><span class="pl-key">FROM:</span> <span class="pl-orange">SM (Carlos + Claude Opus)</span></div>
+          <div class="plan-line"><span class="pl-key">TIMESTAMP:</span> <span class="pl-dim">2026-03-24T09:41:00Z</span></div>
+          <div class="plan-line"><span class="pl-key">PRIORIDAD:</span> <span class="pl-val">HIGH</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-head">── PLAN ──────────────────────────────</span></div>
+          <div class="plan-line"><span class="pl-val">Implement batch DGII tax report export</span></div>
+          <div class="plan-line"><span class="pl-val">for 314 active companies. Format: 606.</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-head">── WAVES ─────────────────────────────</span></div>
+          <div class="plan-line"><span class="pl-blue">Wave 1 [parallel]:</span></div>
+          <div class="plan-line"><span class="pl-dim">  ├─</span> <span class="pl-green">agent-db</span>: <span class="pl-val">Query all active NCF</span></div>
+          <div class="plan-line"><span class="pl-dim">  └─</span> <span class="pl-green">agent-pdf</span>: <span class="pl-val">Prepare 606 template</span></div>
+          <div class="plan-line"><span class="pl-blue">Wave 2 [sequential]:</span></div>
+          <div class="plan-line"><span class="pl-dim">  └─</span> <span class="pl-green">agent-export</span>: <span class="pl-val">Generate ZIP, upload</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-head">── BORIS ─────────────────────────────</span></div>
+          <div class="plan-line"><span class="pl-val">Verify: curl /api/export → 200 + ZIP</span></div>
+          <div class="plan-line"><span class="pl-val">Evidence: file size + row count match</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-head">── MODELO ────────────────────────────</span></div>
+          <div class="plan-line"><span class="pl-val">Arch: claude-sonnet-4-5</span></div>
+          <div class="plan-line"><span class="pl-val">Squads: gemini-flash (free)</span></div>
+          <div class="plan-line">&nbsp;</div>
+          <div class="plan-line"><span class="pl-green">GEMINI GATE: ✓ 6/6 labels validated</span></div>
+          <div class="plan-line"><span class="pl-green">HUMAN GATE:  ✓ Carlos approved 09:44</span></div>
+          <div class="plan-line"><span class="pl-orange">→ Dispatching to arch-gestoriard...</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════ PRODUCTS ═══════════════ -->
+    <section id="products">
+      <div class="section-label">10 — Live products</div>
+      <h2 class="section-title reveal">Built with <span class="accent">SYNAPSE</span></h2>
+      <p class="section-desc reveal reveal-delay-1">
+        Real products in production. Each managed by a dedicated architect, served by multiple agent squads.
+      </p>
+
+      <div class="products-grid">
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-icon">🏛️</div>
+          <div class="product-name">GestorIA RD</div>
+          <div class="product-type">Fiscal SaaS</div>
+          <div class="product-desc">Automated tax management for Dominican Republic. DGII integration, 314 companies, NCF generation, 606/607 reports.</div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-icon">📄</div>
+          <div class="product-name">FacturaIA</div>
+          <div class="product-type">Mobile OCR</div>
+          <div class="product-desc">React Native app. Scan receipts, extract fields via OCR pipeline, multi-tenant isolation. Zero manual entry.</div>
+        </div>
+        <div class="product-card reveal reveal-delay-3">
+          <div class="product-icon">📈</div>
+          <div class="product-name">IA Trader</div>
+          <div class="product-type">Trading automation</div>
+          <div class="product-desc">MetaTrader5 via RPyC + Wine. BrainAgent → ValidatorAgent → ExecutorAgent pipeline. XGBoost signal generation.</div>
+        </div>
+        <div class="product-card reveal reveal-delay-1">
+          <div class="product-icon">🕷️</div>
+          <div class="product-name">DGII Harvester</div>
+          <div class="product-type">Data scraping</div>
+          <div class="product-desc">Automated scraping of Dominican Republic tax authority data. Enriches GestorIA with real-time regulatory updates.</div>
+        </div>
+        <div class="product-card reveal reveal-delay-2">
+          <div class="product-icon">🎰</div>
+          <div class="product-name">Casino QR</div>
+          <div class="product-type">Hospitality tech</div>
+          <div class="product-desc">QR-based ordering and loyalty system for casino operations. Real-time inventory, POS integration.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer>
+    <div class="footer-name">Carlos De La Torre + <span>SYNAPSE</span></div>
+    <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem;">AI Orchestrator — Architect of AI Infrastructure</div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/carlosdelatorretechnology/" target="_blank" rel="noopener">LinkedIn →</a>
+      <a href="index.html">Portfolio</a>
+      <a href="mailto:radelqui@gmail.com">radelqui@gmail.com</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 Carlos De La Torre · SYNAPSE methodology · 29+ agents · 7 projects · 24/7
+    </div>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // NEURAL NETWORK CANVAS BACKGROUND
+    // ═══════════════════════════════════════════════════════
+    (function() {
+      const canvas = document.getElementById('neural-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height, nodes, animFrame;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initNodes();
+      }
+
+      function initNodes() {
+        nodes = [];
+        const count = Math.min(60, Math.floor(width * height / 18000));
+        for (let i = 0; i < count; i++) {
+          nodes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 2 + 1,
+            opacity: Math.random() * 0.5 + 0.2
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Draw edges
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = 160;
+            if (dist < maxDist) {
+              const alpha = (1 - dist / maxDist) * 0.12;
+              ctx.strokeStyle = `rgba(218, 119, 86, ${alpha})`;
+              ctx.lineWidth = 0.8;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw nodes
+        for (const node of nodes) {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(218, 119, 86, ${node.opacity})`;
+          ctx.fill();
+
+          // Move
+          node.x += node.vx;
+          node.y += node.vy;
+
+          // Bounce
+          if (node.x < 0 || node.x > width) node.vx *= -1;
+          if (node.y < 0 || node.y > height) node.vy *= -1;
+        }
+
+        animFrame = requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // SCROLL REVEAL
+    // ═══════════════════════════════════════════════════════
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // ANIMATED COUNTERS
+    // ═══════════════════════════════════════════════════════
+    (function() {
+      function animateCounter(el, target, suffix) {
+        const duration = 1800;
+        const start = performance.now();
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          const current = Math.floor(eased * target);
+          el.textContent = current + (suffix || '');
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      }
+
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.target, 10);
+            const suffix = el.dataset.suffix || '';
+            animateCounter(el, target, suffix);
+            counterObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // HERO TITLE GLITCH EFFECT (subtle)
+    // ═══════════════════════════════════════════════════════
+    (function() {
+      const synapse = document.querySelector('.synapse-word');
+      if (!synapse) return;
+      const letters = 'SYNAPSE'.split('');
+      let interval;
+
+      function glitch() {
+        let iteration = 0;
+        clearInterval(interval);
+        interval = setInterval(() => {
+          synapse.textContent = 'SYNAPSE'.split('').map((char, i) => {
+            if (i < iteration) return letters[i];
+            return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+          }).join('');
+          if (iteration >= letters.length) {
+            synapse.textContent = 'SYNAPSE';
+            clearInterval(interval);
+          }
+          iteration += 0.4;
+        }, 45);
+      }
+
+      // Trigger on page load after a short delay
+      setTimeout(glitch, 800);
+
+      // Re-trigger on hover
+      synapse.addEventListener('mouseenter', glitch);
+    })();
+
+    // ═══════════════════════════════════════════════════════
+    // SMOOTH SCROLL FOR NAV
+    // ═══════════════════════════════════════════════════════
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
